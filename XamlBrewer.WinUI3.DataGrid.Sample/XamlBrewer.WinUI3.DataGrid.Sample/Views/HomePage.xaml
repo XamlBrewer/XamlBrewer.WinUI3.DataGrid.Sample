@@ -1,0 +1,115 @@
+﻿<Page x:Class="XamlBrewer.WinUI3.DataGrid.Sample.Views.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:XamlBrewer.WinUI3.DataGrid.Sample.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
+      xmlns:wctprimitives="using:CommunityToolkit.WinUI.UI.Controls.Primitives"
+      mc:Ignorable="d"
+      Background="Transparent">
+    <!--<Page.Resources>
+        <Style TargetType="wctprimitives:DataGridColumnHeader">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="wctprimitives:DataGridColumnHeader">
+                        <Grid Background="Transparent">
+                            <HyperlinkButton Content="{TemplateBinding Content}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>-->
+    <Grid Margin="0 0 0 80">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!-- This cries for a Ribbon control. -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Background="{StaticResource SystemAccentColorBrush}"
+                    Margin="0 0 0 16"
+                    CornerRadius="4"
+                    Height="52">
+            <CommandBar DefaultLabelPosition="Right"
+                        Background="Transparent"
+                        VerticalAlignment="Center">
+                <AppBarButton Icon="Filter"
+                              Label="Filter"
+                              Width="80">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Rank &lt; 50"
+                                            Click="FilterRankLow_Click" />
+                            <MenuFlyoutItem Text="Rank &gt; 50"
+                                            Click="FilterRankHigh_Click" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem x:Name="FilterHeightLow"
+                                            Text="Height &lt; 8000 m"
+                                            Click="FilterHeightLow_Click" />
+                            <MenuFlyoutItem Text="Height &gt; 8000 m"
+                                            Click="FilterHeightHigh_Click" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem Text="Remove Filter"
+                                            Click="FilterClear_Click" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+                <AppBarButton Label="Group"
+                              Width="80">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xF168;" />
+                    </AppBarButton.Icon>
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Range"
+                                            Click="GroupByRange_Click" />
+                            <MenuFlyoutItem Text="Parent Mountain"
+                                            Click="GroupByParentMountain_Click" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+            </CommandBar>
+            <AutoSuggestBox x:Name="SearchBox"
+                            QuerySubmitted="SearchBox_QuerySubmitted"
+                            QueryIcon="Find"
+                            Width="240"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="8 0 0 0" />
+            <CommandBar DefaultLabelPosition="Right"
+                        Background="Transparent"
+                        VerticalAlignment="Center"
+                        Margin="0 0 8 0">
+                <AppBarButton Label="Search"
+                              Click="SearchButton_Click" />
+            </CommandBar>
+        </StackPanel>
+        <ctWinUI:DataGrid x:Name="DataGrid"
+                          AutoGenerateColumns="False"
+                          CanUserSortColumns="True"
+                          Sorting="DataGrid_Sorting"
+                          LoadingRowGroup="DataGrid_LoadingRowGroup"
+                          Grid.Row="1">
+            <ctWinUI:DataGrid.Columns>
+                <ctWinUI:DataGridTextColumn Header="Rank"
+                                            Binding="{Binding Rank}"
+                                            Tag="Rank" />
+                <ctWinUI:DataGridComboBoxColumn Header="Mountain"
+                                                Binding="{Binding Mountain}"
+                                                Tag="Mountain" />
+                <ctWinUI:DataGridTextColumn Header="Height (m)"
+                                            Binding="{Binding Height_m}"
+                                            Tag="Height_m" />
+                <ctWinUI:DataGridTextColumn Header="Range"
+                                            Binding="{Binding Range}"
+                                            Tag="Range" />
+                <ctWinUI:DataGridTextColumn Header="Parent Mountain"
+                                            Binding="{Binding Parent_mountain}"
+                                            Tag="Parent_mountain" />
+            </ctWinUI:DataGrid.Columns>
+        </ctWinUI:DataGrid>
+    </Grid>
+</Page>

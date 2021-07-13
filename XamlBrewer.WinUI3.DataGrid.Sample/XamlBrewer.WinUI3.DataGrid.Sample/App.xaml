@@ -1,0 +1,19 @@
+﻿<Application x:Class="XamlBrewer.WinUI3.DataGrid.Sample.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:XamlBrewer.WinUI3.DataGrid.Sample"
+             RequestedTheme="Dark">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <!-- Other merged dictionaries here -->
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Other app resources here -->
+            <Color x:Key="SystemAccentColor">CadetBlue</Color>
+            <SolidColorBrush x:Key="SystemAccentColorBrush"
+                             Color="{StaticResource SystemAccentColor}"
+                             Opacity=".33" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
