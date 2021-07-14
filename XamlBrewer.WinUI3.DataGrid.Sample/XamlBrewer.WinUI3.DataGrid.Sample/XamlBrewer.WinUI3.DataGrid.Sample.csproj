@@ -23,9 +23,9 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.0.3" />
-    <PackageReference Include="Microsoft.ProjectReunion" Version="0.8.0" />
-    <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.0" />
-    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.0" />
+    <PackageReference Include="Microsoft.ProjectReunion" Version="0.8.1" />
+    <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.1" />
+    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
