@@ -46,12 +46,11 @@
                                     ShowAsMonochrome="False" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Beer"
-                                    Visibility="Collapsed"
-                                    Tag="XamlBrewer.WinUI3.Navigation.Sample.Views.BeerPage"
-                                    ToolTipService.ToolTip="Beer">
+                <NavigationViewItem Content="Database"
+                                    Tag="XamlBrewer.WinUI3.DataGrid.Sample.Views.DatabasePage"
+                                    ToolTipService.ToolTip="Database">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/Beer.png"
+                        <BitmapIcon UriSource="/Assets/Database.png"
                                     ShowAsMonochrome="False" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>

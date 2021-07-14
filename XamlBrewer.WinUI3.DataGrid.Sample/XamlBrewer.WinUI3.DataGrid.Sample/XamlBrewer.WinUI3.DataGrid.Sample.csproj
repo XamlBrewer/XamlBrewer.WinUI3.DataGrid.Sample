@@ -12,21 +12,31 @@
   <ItemGroup>
     <Content Remove="Assets\About.png" />
     <Content Remove="Assets\background.jpg" />
+    <Content Remove="Assets\database.png" />
     <Content Remove="Assets\Home.png" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\mtns.csv" />
     <None Remove="Shell.xaml" />
     <None Remove="Views\AboutPage.xaml" />
+    <None Remove="Views\DatabasePage.xaml" />
     <None Remove="Views\HomePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.8" />
     <PackageReference Include="Microsoft.ProjectReunion" Version="0.8.1" />
     <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.1" />
     <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.1" />
+    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
     <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\DatabasePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

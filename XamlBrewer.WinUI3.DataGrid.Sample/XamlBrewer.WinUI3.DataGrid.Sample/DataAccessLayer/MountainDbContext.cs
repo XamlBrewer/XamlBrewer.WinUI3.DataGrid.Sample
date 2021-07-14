@@ -1,0 +1,28 @@
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Windows.Storage;
+using XamlBrewer.WinUI3.DataGrid.Sample.Models;
+
+namespace XamlBrewer.WinUI3.DataGrid.Sample.DataAccessLayer
+{
+    public class MountainDbContext : DbContext
+    {
+        public DbSet<Mountain> Mountains { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "mountains.db");
+
+            string connectionStringBuilder = new
+                SqliteConnectionStringBuilder()
+            {
+                DataSource = path
+            }
+             .ToString();
+
+            var connection = new SqliteConnection(connectionStringBuilder);
+            optionsBuilder.UseSqlite(connection);
+        }
+    }
+}
