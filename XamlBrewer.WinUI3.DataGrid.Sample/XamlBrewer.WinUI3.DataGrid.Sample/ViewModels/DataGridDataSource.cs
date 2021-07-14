@@ -248,7 +248,7 @@ namespace Microsoft.Toolkit.Uwp.SampleApp.Data
             return _items;
         }
 
-        public ObservableCollection<DataGridDataItem> SearchData(String queryText)
+        public ObservableCollection<DataGridDataItem> SearchData(string queryText)
         {
             return new ObservableCollection<DataGridDataItem>(from item in _items
                                                               where item.Mountain.Contains(queryText, StringComparison.InvariantCultureIgnoreCase)

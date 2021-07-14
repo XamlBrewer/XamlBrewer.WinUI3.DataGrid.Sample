@@ -33,7 +33,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         {
             // Add sorting indicator, and sort
             var isAscending = e.Column.SortDirection == null || e.Column.SortDirection == ctWinUI.DataGridSortDirection.Descending;
-            DataGrid.ItemsSource = _dataSource.SortData(e.Column.Tag.ToString(), isAscending);
+            DataGrid.ItemsSource = _viewModel.SortedMountains(e.Column.Tag.ToString(), isAscending);
             e.Column.SortDirection = isAscending
                 ? ctWinUI.DataGridSortDirection.Ascending
                 : ctWinUI.DataGridSortDirection.Descending;
@@ -52,7 +52,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         {
             ICollectionViewGroup group = e.RowGroupHeader.CollectionViewGroup;
             DataGridDataItem item = group.GroupItems[0] as DataGridDataItem;
-            if (_grouping == "Parent_Mountain")
+            if (_grouping == "ParentMountain")
             {
                 e.RowGroupHeader.PropertyValue = item.Parent_mountain;
             }
@@ -96,7 +96,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         private void GroupByParentMountain_Click(object sender, RoutedEventArgs e)
         {
-            ApplyGrouping("Parent_Mountain");
+            ApplyGrouping("ParentMountain");
         }
 
         private void GroupByRange_Click(object sender, RoutedEventArgs e)
@@ -106,12 +106,12 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            DataGrid.ItemsSource = _dataSource.SearchData(args.QueryText);
+            DataGrid.ItemsSource = _viewModel.SearchMountainsByName(args.QueryText);
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            DataGrid.ItemsSource = _dataSource.SearchData(SearchBox.Text);
+            DataGrid.ItemsSource = _viewModel.SearchMountainsByName(SearchBox.Text);
         }
     }
 }

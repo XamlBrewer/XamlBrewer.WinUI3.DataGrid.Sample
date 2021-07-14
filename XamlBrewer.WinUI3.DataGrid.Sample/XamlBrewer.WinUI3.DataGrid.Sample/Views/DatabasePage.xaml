@@ -86,16 +86,16 @@
                                             Tag="Rank" />
                 <ctWinUI:DataGridComboBoxColumn Header="Mountain"
                                                 Binding="{Binding Name}"
-                                                Tag="Mountain" />
+                                                Tag="Name" />
                 <ctWinUI:DataGridTextColumn Header="Height (m)"
                                             Binding="{Binding Height}"
-                                            Tag="Height_m" />
+                                            Tag="Height" />
                 <ctWinUI:DataGridTextColumn Header="Range"
                                             Binding="{Binding Range}"
                                             Tag="Range" />
                 <ctWinUI:DataGridTextColumn Header="Parent Mountain"
                                             Binding="{Binding ParentMountain}"
-                                            Tag="Parent_mountain" />
+                                            Tag="ParentMountain" />
             </ctWinUI:DataGrid.Columns>
         </ctWinUI:DataGrid>
     </Grid>
