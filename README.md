@@ -12,3 +12,9 @@ Features include
 * searching for values à la sql LIKE
 * instant theme switching
 * ...
+
+## Some screenshots
+
+![Screenshot](Assets/HomeGroup.png?raw=true)
+
+![Screenshot](Assets/DatabaseSearch.png?raw=true)
