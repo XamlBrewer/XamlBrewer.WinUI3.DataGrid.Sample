@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Uwp.SampleApp.Data;
+using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -16,7 +18,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
         {
             using (var dbContext = new MountainDbContext())
             {
-                return dbContext.Mountains.Select(i => i).ToList();
+                return dbContext.Mountains.ToList();
             }
         }
 
@@ -24,7 +26,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
         {
             using (var dbContext = new MountainDbContext())
             {
-                return dbContext.Mountains.Select(i => i).OrderBy(sortBy, !ascending).ToList();
+                return dbContext.Mountains.OrderBy(sortBy, !ascending).ToList();
             }
         }
 
@@ -35,6 +37,86 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
                 return (from item in dbContext.Mountains
                         where EF.Functions.Like(item.Name, $"%{queryText}%")
                         select item).ToList();
+            }
+        }
+
+        public enum FilterOptions
+        {
+            All = -1,
+            Rank_Low = 0,
+            Rank_High = 1,
+            Height_Low = 2,
+            Height_High = 3
+        }
+
+        public IEnumerable<Mountain> FilterData(FilterOptions filterBy)
+        {
+            using var dbContext = new MountainDbContext();
+
+            switch (filterBy)
+            {
+                case FilterOptions.All:
+                    return dbContext.Mountains.ToList();
+
+                case FilterOptions.Rank_Low:
+                    return dbContext.Mountains.Where(m => m.Rank < 50).ToList();
+
+                case FilterOptions.Rank_High:
+                    return dbContext.Mountains.Where(m => m.Rank > 50).ToList();
+
+                case FilterOptions.Height_High:
+                    return dbContext.Mountains.Where(m => m.Height > 8000).ToList();
+
+                case FilterOptions.Height_Low:
+                    return dbContext.Mountains.Where(m => m.Height < 8000).ToList();
+            }
+
+            return dbContext.Mountains.ToList();
+        }
+
+        public CollectionViewSource GroupData(string groupBy = "Range")
+        {
+            using var dbContext = new MountainDbContext();
+
+            ObservableCollection<GroupInfoCollection<Mountain>> groups = new();
+            var query = from item in dbContext.Mountains.ToList()
+                        orderby item.Range
+                        group item by item.Range into g
+                        select new { GroupName = g.Key, Items = g };
+            if (groupBy == "ParentMountain")
+            {
+                query = from item in dbContext.Mountains.ToList()
+                        orderby item.ParentMountain
+                        group item by item.ParentMountain into g
+                        select new { GroupName = g.Key, Items = g };
+            }
+            foreach (var g in query)
+            {
+                GroupInfoCollection<Mountain> info = new();
+                info.Key = g.GroupName;
+                var mountains = g.Items;
+                foreach (var item in g.Items)
+                {
+                    info.Add(item);
+                }
+
+                groups.Add(info);
+            }
+
+            var groupedItems = new CollectionViewSource();
+            groupedItems.IsSourceGrouped = true;
+            groupedItems.Source = groups;
+
+            return groupedItems;
+        }
+
+        public class GroupInfoCollection<T> : ObservableCollection<T>
+        {
+            public object Key { get; set; }
+
+            public new IEnumerator<T> GetEnumerator()
+            {
+                return (IEnumerator<T>)base.GetEnumerator();
             }
         }
 

@@ -1,9 +1,7 @@
-﻿using Microsoft.Toolkit.Uwp.SampleApp.Data;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
-using System.Linq;
-using XamlBrewer.WinUI3.DataGrid.Sample.DataAccessLayer;
+using Microsoft.UI.Xaml.Navigation;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
 using XamlBrewer.WinUI3.DataGrid.Sample.ViewModels;
 using ctWinUI = CommunityToolkit.WinUI.UI.Controls;
@@ -12,8 +10,8 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 {
     public sealed partial class DatabasePage : Page
     {
-        private DataGridDataSource _dataSource = new DataGridDataSource();
         private MountainViewModel _viewModel = new MountainViewModel();
+        private long _token;
 
         private string _grouping;
 
@@ -21,6 +19,18 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         {
             this.InitializeComponent();
             this.Loaded += DatabasePage_Loaded;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            _token = DataGrid.RegisterPropertyChangedCallback(ctWinUI.DataGrid.ItemsSourceProperty, DataGridItemsSourceChangedCallback);
+            base.OnNavigatedTo(e);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            DataGrid.UnregisterPropertyChangedCallback(ctWinUI.DataGrid.ItemsSourceProperty, _token);
+            base.OnNavigatedFrom(e);
         }
 
         private async void DatabasePage_Loaded(object sender, RoutedEventArgs e)
@@ -51,10 +61,10 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         private void DataGrid_LoadingRowGroup(object sender, ctWinUI.DataGridRowGroupHeaderEventArgs e)
         {
             ICollectionViewGroup group = e.RowGroupHeader.CollectionViewGroup;
-            DataGridDataItem item = group.GroupItems[0] as DataGridDataItem;
+            Mountain item = group.GroupItems[0] as Mountain;
             if (_grouping == "ParentMountain")
             {
-                e.RowGroupHeader.PropertyValue = item.Parent_mountain;
+                e.RowGroupHeader.PropertyValue = item.ParentMountain;
             }
             else
             {
@@ -64,34 +74,34 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         private void FilterRankLow_Click(object sender, RoutedEventArgs e)
         {
-            DataGrid.ItemsSource = _dataSource.FilterData(DataGridDataSource.FilterOptions.Rank_Low);
+            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Rank_Low);
         }
 
         private void FilterRankHigh_Click(object sender, RoutedEventArgs e)
         {
-            DataGrid.ItemsSource = _dataSource.FilterData(DataGridDataSource.FilterOptions.Rank_High);
+            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Rank_High);
         }
 
         private void FilterHeightLow_Click(object sender, RoutedEventArgs e)
         {
-            DataGrid.ItemsSource = _dataSource.FilterData(DataGridDataSource.FilterOptions.Height_Low);
+            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Height_Low);
         }
 
         private void FilterHeightHigh_Click(object sender, RoutedEventArgs e)
         {
-            DataGrid.ItemsSource = _dataSource.FilterData(DataGridDataSource.FilterOptions.Height_High);
+            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Height_High);
         }
 
         private void FilterClear_Click(object sender, RoutedEventArgs e)
         {
-            DataGrid.ItemsSource = _dataSource.FilterData(DataGridDataSource.FilterOptions.All);
+            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.All);
         }
 
         private void ApplyGrouping(string grouping)
         {
             _grouping = grouping;
             DataGrid.RowGroupHeaderPropertyNameAlternative = _grouping;
-            DataGrid.ItemsSource = _dataSource.GroupData(_grouping).View;
+            DataGrid.ItemsSource = _viewModel.GroupData(_grouping).View;
         }
 
         private void GroupByParentMountain_Click(object sender, RoutedEventArgs e)
@@ -112,6 +122,17 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             DataGrid.ItemsSource = _viewModel.SearchMountainsByName(SearchBox.Text);
+        }
+
+        private void DataGridItemsSourceChangedCallback(DependencyObject sender, DependencyProperty dp)
+        {
+            if (dp == ctWinUI.DataGrid.ItemsSourceProperty)
+            {
+                foreach (var column in (sender as ctWinUI.DataGrid).Columns)
+                {
+                    column.SortDirection = null;
+                }
+            }
         }
     }
 }
