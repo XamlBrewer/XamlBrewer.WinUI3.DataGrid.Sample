@@ -137,7 +137,11 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
                         Name = i.Mountain,
                         Height = i.Height_m,
                         Range = i.Range,
-                        ParentMountain = i.Parent_mountain
+                        ParentMountain = i.Parent_mountain,
+                        Coordinates = i.Coordinates,
+                        Prominence = i.Prominence,
+                        FirstAscent = i.First_ascent,
+                        Ascents = i.Ascents
                     }));
 
                     dbContext.SaveChanges(); // Raaaaah, do not forget this.

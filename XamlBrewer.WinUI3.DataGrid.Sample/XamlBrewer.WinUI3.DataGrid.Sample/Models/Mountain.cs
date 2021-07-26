@@ -44,5 +44,13 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Models
             get => _parentMountain;
             set => SetProperty(ref _parentMountain, value);
         }
+
+        public string Coordinates { get; set; }
+
+        public uint Prominence { get; set; }
+
+        public uint FirstAscent { get; set; }
+
+        public string Ascents { get; set; }
     }
 }

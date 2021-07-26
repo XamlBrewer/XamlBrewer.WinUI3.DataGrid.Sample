@@ -14,6 +14,8 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.DataAccessLayer
         {
             var path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "mountains.db");
 
+            // File.Delete(path); // Reset to factory settings.
+
             string connectionStringBuilder = new
                 SqliteConnectionStringBuilder()
             {

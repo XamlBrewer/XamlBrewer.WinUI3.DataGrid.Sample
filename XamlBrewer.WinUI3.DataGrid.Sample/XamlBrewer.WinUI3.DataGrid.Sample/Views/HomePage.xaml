@@ -12,6 +12,61 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid.Resources>
+            <DataTemplate x:Key="RowDetailsTemplate">
+                <StackPanel>
+                    <TextBlock Margin="20"
+                               Text="Here are the details for the selected mountain:" />
+                    <Grid Margin="20,10"
+                          Padding="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Coordinates: "
+                                   FontWeight="SemiBold"
+                                   FontSize="13" />
+                        <TextBlock Grid.Row="1"
+                                   Text="Prominence (m): "
+                                   FontWeight="SemiBold"
+                                   FontSize="13" />
+                        <TextBlock Grid.Row="2"
+                                   Text="First Ascent (year): "
+                                   FontWeight="SemiBold"
+                                   FontSize="13" />
+                        <TextBlock Grid.Row="3"
+                                   Text="No. of ascents: "
+                                   FontWeight="SemiBold"
+                                   FontSize="13" />
+                        <TextBlock Grid.Column="1"
+                                   FontSize="13"
+                                   Text="{Binding Coordinates}"
+                                   HorizontalAlignment="Right" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   FontSize="13"
+                                   Text="{Binding Prominence}"
+                                   HorizontalAlignment="Right" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   FontSize="13"
+                                   Text="{Binding First_ascent}"
+                                   HorizontalAlignment="Right" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="1"
+                                   FontSize="13"
+                                   Text="{Binding Ascents}"
+                                   HorizontalAlignment="Right" />
+                    </Grid>
+                </StackPanel>
+            </DataTemplate>
+        </Grid.Resources>
         <!-- This cries for a Ribbon control. -->
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Left"
@@ -78,6 +133,8 @@
                           CanUserSortColumns="True"
                           Sorting="DataGrid_Sorting"
                           LoadingRowGroup="DataGrid_LoadingRowGroup"
+                          RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
+                          RowDetailsVisibilityMode="VisibleWhenSelected"
                           Grid.Row="1">
             <ctWinUI:DataGrid.Columns>
                 <ctWinUI:DataGridTextColumn Header="Rank"
