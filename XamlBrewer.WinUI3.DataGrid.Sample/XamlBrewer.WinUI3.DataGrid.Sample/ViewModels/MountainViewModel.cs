@@ -148,6 +148,17 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
                 }
             }
         }
+
+        public async Task ResetAsync()
+        {
+            using (var dbContext = new MountainDbContext())
+            {
+                // Ensure database is removed
+                dbContext.Database.EnsureDeleted();
+            }
+
+            await InitializeAsync();
+        }
     }
 
     public static class IQueryableExtensions

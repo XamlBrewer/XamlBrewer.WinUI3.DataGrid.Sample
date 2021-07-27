@@ -19,6 +19,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         {
             this.InitializeComponent();
             this.Loaded += DatabasePage_Loaded;
+            this.Unloaded += DatabasePage_Unloaded;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -41,10 +42,15 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             DataGrid.SelectionChanged += DataGrid_SelectionChanged;
         }
 
+        private void DatabasePage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            DataGrid.SelectionChanged -= DataGrid_SelectionChanged;
+        }
+
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataGrid.RowDetailsVisibilityMode = ctWinUI.DataGridRowDetailsVisibilityMode.Collapsed;
-            DetailsButton.IsEnabled = DataGrid.SelectedIndex > 0;
+            DetailsButton.IsEnabled = DataGrid.SelectedIndex >= 0;
         }
 
         private void DataGrid_Sorting(object sender, ctWinUI.DataGridColumnEventArgs e)
@@ -146,6 +152,12 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         private void DetailsButton_Click(object sender, RoutedEventArgs e)
         {
             DataGrid.RowDetailsVisibilityMode = 2 - DataGrid.RowDetailsVisibilityMode;
+        }
+
+        private async void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.ResetAsync();
+            DataGrid.ItemsSource = _viewModel.AllMountains();
         }
     }
 }
