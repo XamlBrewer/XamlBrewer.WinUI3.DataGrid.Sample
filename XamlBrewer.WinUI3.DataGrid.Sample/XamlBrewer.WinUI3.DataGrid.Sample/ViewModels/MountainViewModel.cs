@@ -18,7 +18,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
         {
             using (var dbContext = new MountainDbContext())
             {
-                return dbContext.Mountains.ToList();
+                return dbContext.Mountains.OrderBy(m => m.Rank).ToList();
             }
         }
 
@@ -36,6 +36,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
             {
                 return (from item in dbContext.Mountains
                         where EF.Functions.Like(item.Name, $"%{queryText}%")
+                        orderby item.Rank
                         select item).ToList();
             }
         }
@@ -56,19 +57,19 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
             switch (filterBy)
             {
                 case FilterOptions.All:
-                    return dbContext.Mountains.ToList();
+                    return dbContext.Mountains.OrderBy(m => m.Rank).ToList();
 
                 case FilterOptions.Rank_Low:
-                    return dbContext.Mountains.Where(m => m.Rank < 50).ToList();
+                    return dbContext.Mountains.Where(m => m.Rank < 50).OrderBy(m => m.Rank).ToList();
 
                 case FilterOptions.Rank_High:
-                    return dbContext.Mountains.Where(m => m.Rank > 50).ToList();
+                    return dbContext.Mountains.Where(m => m.Rank > 50).OrderBy(m => m.Rank).ToList();
 
                 case FilterOptions.Height_High:
-                    return dbContext.Mountains.Where(m => m.Height > 8000).ToList();
+                    return dbContext.Mountains.Where(m => m.Height > 8000).OrderBy(m => m.Rank).ToList();
 
                 case FilterOptions.Height_Low:
-                    return dbContext.Mountains.Where(m => m.Height < 8000).ToList();
+                    return dbContext.Mountains.Where(m => m.Height < 8000).OrderBy(m => m.Rank).ToList();
             }
 
             return dbContext.Mountains.ToList();
