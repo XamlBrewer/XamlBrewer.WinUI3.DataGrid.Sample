@@ -3,7 +3,6 @@ using Microsoft.Toolkit.Uwp.SampleApp.Data;
 using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -79,45 +78,49 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
         {
             using var dbContext = new MountainDbContext();
 
-            ObservableCollection<GroupInfoCollection<Mountain>> groups = new();
-            var query = from item in dbContext.Mountains.ToList()
-                        orderby item.Range
-                        group item by item.Range into g
-                        select new { GroupName = g.Key, Items = g };
+            var query = dbContext.Mountains
+                            .OrderBy(m => m.Range)
+                            .ThenBy(m => m.Rank)
+                            .ToList()
+                            .GroupBy(m => m.Range, (key, list) => new GroupInfoCollection<string, Mountain>(key, list));
             if (groupBy == "ParentMountain")
             {
-                query = from item in dbContext.Mountains.ToList()
-                        orderby item.ParentMountain
-                        group item by item.ParentMountain into g
-                        select new { GroupName = g.Key, Items = g };
+                query = dbContext.Mountains
+                            .OrderBy(m => m.ParentMountain)
+                            .ThenBy(m => m.Rank)
+                            .ToList()
+                            .GroupBy(m => m.ParentMountain, (key, list) => new GroupInfoCollection<string, Mountain>(key, list));
             }
-            foreach (var g in query)
+
+            var groupedItems = new CollectionViewSource
             {
-                GroupInfoCollection<Mountain> info = new();
-                info.Key = g.GroupName;
-                var mountains = g.Items;
-                foreach (var item in g.Items)
-                {
-                    info.Add(item);
-                }
-
-                groups.Add(info);
-            }
-
-            var groupedItems = new CollectionViewSource();
-            groupedItems.IsSourceGrouped = true;
-            groupedItems.Source = groups;
+                IsSourceGrouped = true,
+                Source = query
+            };
 
             return groupedItems;
         }
 
-        public class GroupInfoCollection<T> : ObservableCollection<T>
+        public class GroupInfoCollection<K, T> : IGrouping<K, T>
         {
-            public object Key { get; set; }
+            private readonly IEnumerable<T> _items;
 
-            public new IEnumerator<T> GetEnumerator()
+            public GroupInfoCollection(K key, IEnumerable<T> items)
             {
-                return (IEnumerator<T>)base.GetEnumerator();
+                Key = key;
+                _items = items;
+            }
+
+            public K Key { get; }
+
+            public IEnumerator<T> GetEnumerator()
+            {
+                return _items.GetEnumerator();
+            }
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return _items.GetEnumerator();
             }
         }
 
@@ -164,16 +167,28 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 
     public static class IQueryableExtensions
     {
-        public static IOrderedQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> source, string orderByProperty, bool desc)
+        public static IOrderedQueryable<TEntity> OrderBy<TEntity>(
+            this IQueryable<TEntity> source,
+            string orderByProperty,
+            bool desc)
         {
             string command = desc ? "OrderByDescending" : "OrderBy";
             var type = typeof(TEntity);
             var property = type.GetProperty(orderByProperty);
-            var parameter = Expression.Parameter(type, "p");
-            var propertyAccess = Expression.MakeMemberAccess(parameter, property);
-            var orderByExpression = Expression.Lambda(propertyAccess, parameter);
-            var resultExpression = Expression.Call(typeof(Queryable), command, new Type[] { type, property.PropertyType },
-                source.Expression, Expression.Quote(orderByExpression));
+            var parameter = Expression.Parameter(
+                    type,
+                    "p");
+            var propertyAccess = Expression.MakeMemberAccess(
+                    parameter,
+                    property);
+            var orderByExpression = Expression.Lambda(
+                    propertyAccess,
+                    parameter);
+            var resultExpression = Expression.Call(
+                    typeof(Queryable),
+                    command,
+                    new Type[] { type, property.PropertyType },
+                    source.Expression, Expression.Quote(orderByExpression));
             return (IOrderedQueryable<TEntity>)source.Provider.CreateQuery<TEntity>(resultExpression);
         }
     }
