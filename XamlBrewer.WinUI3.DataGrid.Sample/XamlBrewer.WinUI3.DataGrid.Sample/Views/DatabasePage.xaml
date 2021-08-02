@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
+      xmlns:services="using:XamlBrewer.WinUI3.DataGrid.Sample.Services"
       mc:Ignorable="d"
       Background="Transparent">
     <Grid Margin="0 0 0 80">
@@ -139,6 +140,9 @@
                           RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
                           RowDetailsVisibilityMode="Collapsed"
                           Grid.Row="1">
+            <ctWinUI:DataGrid.Resources>
+                <services:SliderValueConverter x:Key="SliderValueConverter" />
+            </ctWinUI:DataGrid.Resources>
             <ctWinUI:DataGrid.Columns>
                 <ctWinUI:DataGridTextColumn Header="Rank"
                                             Binding="{Binding Rank}"
@@ -146,9 +150,20 @@
                 <ctWinUI:DataGridComboBoxColumn Header="Mountain"
                                                 Binding="{Binding Name}"
                                                 Tag="Name" />
-                <ctWinUI:DataGridTextColumn Header="Height (m)"
+                <!--<ctWinUI:DataGridTextColumn Header="Height (m)"
                                             Binding="{Binding Height}"
-                                            Tag="Height" />
+                                            Tag="Height" />-->
+                <ctWinUI:DataGridTemplateColumn Header="Height"
+                                                Tag="Height">
+                    <ctWinUI:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Slider Minimum="7200"
+                                    Maximum="8848"
+                                    Value="{Binding Height}"
+                                    ThumbToolTipValueConverter="{StaticResource SliderValueConverter}" />
+                        </DataTemplate>
+                    </ctWinUI:DataGridTemplateColumn.CellTemplate>
+                </ctWinUI:DataGridTemplateColumn>
                 <ctWinUI:DataGridTextColumn Header="Range"
                                             Binding="{Binding Range}"
                                             Tag="Range" />
