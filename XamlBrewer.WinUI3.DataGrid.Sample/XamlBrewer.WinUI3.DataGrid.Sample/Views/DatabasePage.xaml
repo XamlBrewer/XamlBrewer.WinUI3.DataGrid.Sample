@@ -142,6 +142,8 @@
                           Grid.Row="1">
             <ctWinUI:DataGrid.Resources>
                 <services:SliderValueConverter x:Key="SliderValueConverter" />
+                <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
+                                 Opacity=".5" />
             </ctWinUI:DataGrid.Resources>
             <ctWinUI:DataGrid.Columns>
                 <ctWinUI:DataGridTextColumn Header="Rank"

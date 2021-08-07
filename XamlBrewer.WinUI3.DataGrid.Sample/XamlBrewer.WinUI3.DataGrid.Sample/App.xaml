@@ -5,6 +5,18 @@
              RequestedTheme="Dark">
     <Application.Resources>
         <ResourceDictionary>
+            <!--<ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
+                                     Color="Black"
+                                     Opacity=".5" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
+                                     Color="White"
+                                     Opacity=".5" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>-->
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->

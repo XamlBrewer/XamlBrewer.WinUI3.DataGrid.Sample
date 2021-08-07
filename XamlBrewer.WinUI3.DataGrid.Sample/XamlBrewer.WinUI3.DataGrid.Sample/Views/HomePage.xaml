@@ -136,6 +136,10 @@
                           RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
                           RowDetailsVisibilityMode="VisibleWhenSelected"
                           Grid.Row="1">
+            <ctWinUI:DataGrid.Resources>
+                <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
+                                 Opacity=".5" />
+            </ctWinUI:DataGrid.Resources>
             <ctWinUI:DataGrid.Columns>
                 <ctWinUI:DataGridTextColumn Header="Rank"
                                             Binding="{Binding Rank}"
