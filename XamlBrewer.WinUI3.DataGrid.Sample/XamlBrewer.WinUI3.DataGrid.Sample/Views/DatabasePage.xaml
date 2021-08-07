@@ -137,13 +137,17 @@
                           Sorting="DataGrid_Sorting"
                           LoadingRowGroup="DataGrid_LoadingRowGroup"
                           SelectionMode="Single"
+                          IsReadOnly="True"
                           RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
                           RowDetailsVisibilityMode="Collapsed"
                           Grid.Row="1">
             <ctWinUI:DataGrid.Resources>
                 <services:SliderValueConverter x:Key="SliderValueConverter" />
+                <!--<Color x:Key="DataGridColumnHeaderBackgroundColor">Silver</Color>-->
                 <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
                                  Opacity=".5" />
+                <SolidColorBrush x:Key="DataGridCellFocusVisualPrimaryBrush">Transparent</SolidColorBrush>
+                <SolidColorBrush x:Key="DataGridCellFocusVisualSecondaryBrush">Transparent</SolidColorBrush>
             </ctWinUI:DataGrid.Resources>
             <ctWinUI:DataGrid.Columns>
                 <ctWinUI:DataGridTextColumn Header="Rank"
@@ -162,6 +166,8 @@
                             <Slider Minimum="7200"
                                     Maximum="8848"
                                     Value="{Binding Height}"
+                                    IsHitTestVisible="False"
+                                    IsTabStop="False"
                                     ThumbToolTipValueConverter="{StaticResource SliderValueConverter}" />
                         </DataTemplate>
                     </ctWinUI:DataGridTemplateColumn.CellTemplate>
