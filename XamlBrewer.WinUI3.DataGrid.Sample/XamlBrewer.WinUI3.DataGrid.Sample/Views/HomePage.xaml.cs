@@ -20,6 +20,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         private async void HomePage_Loaded(object sender, RoutedEventArgs e)
         {
             DataGrid.ItemsSource = await _dataSource.GetDataAsync();
+            DataGrid.Columns[0].SortDirection = ctWinUI.DataGridSortDirection.Ascending;
         }
 
         private void DataGrid_Sorting(object sender, ctWinUI.DataGridColumnEventArgs e)

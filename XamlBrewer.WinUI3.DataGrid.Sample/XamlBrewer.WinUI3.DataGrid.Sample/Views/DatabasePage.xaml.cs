@@ -38,7 +38,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         {
             await _viewModel.InitializeAsync();
             DataGrid.ItemsSource = _viewModel.AllMountains();
-
+            DataGrid.Columns[0].SortDirection = ctWinUI.DataGridSortDirection.Ascending;
             DataGrid.SelectionChanged += DataGrid_SelectionChanged;
         }
 
