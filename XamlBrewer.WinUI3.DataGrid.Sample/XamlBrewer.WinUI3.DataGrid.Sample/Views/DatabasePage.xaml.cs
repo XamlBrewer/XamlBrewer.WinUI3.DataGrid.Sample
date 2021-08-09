@@ -61,15 +61,6 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             e.Column.SortDirection = isAscending
                 ? ctWinUI.DataGridSortDirection.Ascending
                 : ctWinUI.DataGridSortDirection.Descending;
-
-            // Remove sorting indicators from other columns
-            foreach (var column in DataGrid.Columns)
-            {
-                if (column.Tag.ToString() != e.Column.Tag.ToString())
-                {
-                    column.SortDirection = null;
-                }
-            }
         }
 
         private void DataGrid_LoadingRowGroup(object sender, ctWinUI.DataGridRowGroupHeaderEventArgs e)
