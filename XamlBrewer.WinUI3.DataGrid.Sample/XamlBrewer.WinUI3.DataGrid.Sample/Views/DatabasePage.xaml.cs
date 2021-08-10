@@ -79,31 +79,37 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         private void FilterRankLow_Click(object sender, RoutedEventArgs e)
         {
+            SearchBox.Text = string.Empty;
             DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Rank_Low);
         }
 
         private void FilterRankHigh_Click(object sender, RoutedEventArgs e)
         {
+            SearchBox.Text = string.Empty;
             DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Rank_High);
         }
 
         private void FilterHeightLow_Click(object sender, RoutedEventArgs e)
         {
+            SearchBox.Text = string.Empty;
             DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Height_Low);
         }
 
         private void FilterHeightHigh_Click(object sender, RoutedEventArgs e)
         {
+            SearchBox.Text = string.Empty;
             DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Height_High);
         }
 
         private void FilterClear_Click(object sender, RoutedEventArgs e)
         {
+            SearchBox.Text = string.Empty;
             DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.All);
         }
 
         private void ApplyGrouping(string grouping)
         {
+            SearchBox.Text = string.Empty;
             _grouping = grouping;
             DataGrid.RowGroupHeaderPropertyNameAlternative = _grouping;
             DataGrid.ItemsSource = _viewModel.GroupData(_grouping).View;
