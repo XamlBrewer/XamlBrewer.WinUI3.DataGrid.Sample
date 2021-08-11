@@ -13,30 +13,31 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 {
     public class MountainViewModel
     {
-        public IEnumerable<Mountain> AllMountains()
+        public async Task<IEnumerable<Mountain>> AllMountainsAsync()
         {
             using (var dbContext = new MountainDbContext())
             {
-                return dbContext.Mountains.OrderBy(m => m.Rank).ToList();
+                return await dbContext.Mountains.OrderBy(m => m.Rank).AsNoTracking().ToListAsync();
             }
         }
 
-        public IEnumerable<Mountain> SortedMountains(string sortBy, bool ascending)
+        public async Task<IEnumerable<Mountain>> SortedMountainsAsync(string sortBy, bool ascending)
         {
             using (var dbContext = new MountainDbContext())
             {
-                return dbContext.Mountains.OrderBy(sortBy, !ascending).ToList();
+                return await dbContext.Mountains.OrderBy(sortBy, !ascending).AsNoTracking().ToListAsync();
             }
         }
 
-        public IEnumerable<Mountain> SearchMountainsByName(string queryText)
+        public async Task<IEnumerable<Mountain>> SearchMountainsByNameAsync(string queryText)
         {
             using (var dbContext = new MountainDbContext())
             {
-                return (from item in dbContext.Mountains
-                        where EF.Functions.Like(item.Name, $"%{queryText}%")
-                        orderby item.Rank
-                        select item).ToList();
+                return await dbContext.Mountains
+                            .Where(m => EF.Functions.Like(m.Name, $"%{queryText}%"))
+                            .OrderBy(m => m.Rank)
+                            .AsNoTracking()
+                            .ToListAsync();
             }
         }
 
@@ -49,38 +50,41 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
             Height_High = 3
         }
 
-        public IEnumerable<Mountain> FilterData(FilterOptions filterBy)
+        public async Task<IEnumerable<Mountain>> FilteredMountainsAsync(FilterOptions filterBy)
         {
             using var dbContext = new MountainDbContext();
 
             switch (filterBy)
             {
                 case FilterOptions.All:
-                    return dbContext.Mountains.OrderBy(m => m.Rank).ToList();
+                    return await dbContext.Mountains.OrderBy(m => m.Rank).AsNoTracking().ToListAsync();
 
                 case FilterOptions.Rank_Low:
-                    return dbContext.Mountains.Where(m => m.Rank < 50).OrderBy(m => m.Rank).ToList();
+                    return await dbContext.Mountains.Where(m => m.Rank < 50).OrderBy(m => m.Rank).AsNoTracking().ToListAsync();
 
                 case FilterOptions.Rank_High:
-                    return dbContext.Mountains.Where(m => m.Rank > 50).OrderBy(m => m.Rank).ToList();
+                    return await dbContext.Mountains.Where(m => m.Rank > 50).OrderBy(m => m.Rank).AsNoTracking().ToListAsync();
 
                 case FilterOptions.Height_High:
-                    return dbContext.Mountains.Where(m => m.Height > 8000).OrderBy(m => m.Rank).ToList();
+                    return await dbContext.Mountains.Where(m => m.Height > 8000).OrderBy(m => m.Rank).AsNoTracking().ToListAsync();
 
                 case FilterOptions.Height_Low:
-                    return dbContext.Mountains.Where(m => m.Height < 8000).OrderBy(m => m.Rank).ToList();
+                    return await dbContext.Mountains.Where(m => m.Height < 8000).OrderBy(m => m.Rank).AsNoTracking().ToListAsync();
             }
 
-            return dbContext.Mountains.ToList();
+            return await dbContext.Mountains.AsNoTracking().ToListAsync();
         }
 
-        public CollectionViewSource GroupData(string groupBy = "Range")
+        public CollectionViewSource GroupedMountains(string groupBy = "Range")
         {
             using var dbContext = new MountainDbContext();
+
+            // No ToListAsync() here, since we bail out of Entity Framework to do the Grouping.
 
             var query = dbContext.Mountains
                             .OrderBy(m => m.Range)
                             .ThenBy(m => m.Rank)
+                            .AsNoTracking()
                             .ToList()
                             .GroupBy(m => m.Range, (key, list) => new GroupInfoCollection<string, Mountain>(key, list));
             if (groupBy == "ParentMountain")
@@ -88,6 +92,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
                 query = dbContext.Mountains
                             .OrderBy(m => m.ParentMountain)
                             .ThenBy(m => m.Rank)
+                            .AsNoTracking()
                             .ToList()
                             .GroupBy(m => m.ParentMountain, (key, list) => new GroupInfoCollection<string, Mountain>(key, list));
             }

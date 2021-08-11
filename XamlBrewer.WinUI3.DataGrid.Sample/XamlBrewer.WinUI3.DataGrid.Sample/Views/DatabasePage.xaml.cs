@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Navigation;
+using System.Threading.Tasks;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
 using XamlBrewer.WinUI3.DataGrid.Sample.ViewModels;
 using ctWinUI = CommunityToolkit.WinUI.UI.Controls;
@@ -37,7 +38,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         private async void DatabasePage_Loaded(object sender, RoutedEventArgs e)
         {
             await _viewModel.InitializeAsync();
-            DataGrid.ItemsSource = _viewModel.AllMountains();
+            DataGrid.ItemsSource = await _viewModel.AllMountainsAsync();
             DataGrid.Columns[0].SortDirection = ctWinUI.DataGridSortDirection.Ascending;
             DataGrid.SelectionChanged += DataGrid_SelectionChanged;
         }
@@ -53,11 +54,13 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             DetailsButton.IsEnabled = DataGrid.SelectedIndex >= 0;
         }
 
-        private void DataGrid_Sorting(object sender, ctWinUI.DataGridColumnEventArgs e)
+        private async void DataGrid_Sorting(object sender, ctWinUI.DataGridColumnEventArgs e)
         {
+            SearchBox.Text = string.Empty;
+
             // Add sorting indicator, and sort
             var isAscending = e.Column.SortDirection == null || e.Column.SortDirection == ctWinUI.DataGridSortDirection.Descending;
-            DataGrid.ItemsSource = _viewModel.SortedMountains(e.Column.Tag.ToString(), isAscending);
+            DataGrid.ItemsSource = await _viewModel.SortedMountainsAsync(e.Column.Tag.ToString(), isAscending);
             e.Column.SortDirection = isAscending
                 ? ctWinUI.DataGridSortDirection.Ascending
                 : ctWinUI.DataGridSortDirection.Descending;
@@ -77,34 +80,34 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             }
         }
 
-        private void FilterRankLow_Click(object sender, RoutedEventArgs e)
+        private async void FilterRankLow_Click(object sender, RoutedEventArgs e)
         {
             SearchBox.Text = string.Empty;
-            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Rank_Low);
+            DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.Rank_Low);
         }
 
-        private void FilterRankHigh_Click(object sender, RoutedEventArgs e)
+        private async void FilterRankHigh_Click(object sender, RoutedEventArgs e)
         {
             SearchBox.Text = string.Empty;
-            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Rank_High);
+            DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.Rank_High);
         }
 
-        private void FilterHeightLow_Click(object sender, RoutedEventArgs e)
+        private async void FilterHeightLow_Click(object sender, RoutedEventArgs e)
         {
             SearchBox.Text = string.Empty;
-            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Height_Low);
+            DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.Height_Low);
         }
 
-        private void FilterHeightHigh_Click(object sender, RoutedEventArgs e)
+        private async void FilterHeightHigh_Click(object sender, RoutedEventArgs e)
         {
             SearchBox.Text = string.Empty;
-            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.Height_High);
+            DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.Height_High);
         }
 
-        private void FilterClear_Click(object sender, RoutedEventArgs e)
+        private async void FilterClear_Click(object sender, RoutedEventArgs e)
         {
             SearchBox.Text = string.Empty;
-            DataGrid.ItemsSource = _viewModel.FilterData(MountainViewModel.FilterOptions.All);
+            DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.All);
         }
 
         private void ApplyGrouping(string grouping)
@@ -112,7 +115,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             SearchBox.Text = string.Empty;
             _grouping = grouping;
             DataGrid.RowGroupHeaderPropertyNameAlternative = _grouping;
-            DataGrid.ItemsSource = _viewModel.GroupData(_grouping).View;
+            DataGrid.ItemsSource = _viewModel.GroupedMountains(_grouping).View;
         }
 
         private void GroupByParentMountain_Click(object sender, RoutedEventArgs e)
@@ -125,14 +128,14 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             ApplyGrouping("Range");
         }
 
-        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            DataGrid.ItemsSource = _viewModel.SearchMountainsByName(args.QueryText);
+            DataGrid.ItemsSource = await _viewModel.SearchMountainsByNameAsync(args.QueryText);
         }
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            DataGrid.ItemsSource = _viewModel.SearchMountainsByName(SearchBox.Text);
+            DataGrid.ItemsSource = await _viewModel.SearchMountainsByNameAsync(SearchBox.Text);
         }
 
         private void DataGridItemsSourceChangedCallback(DependencyObject sender, DependencyProperty dp)
@@ -154,7 +157,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         private async void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             await _viewModel.ResetAsync();
-            DataGrid.ItemsSource = _viewModel.AllMountains();
+            DataGrid.ItemsSource = await _viewModel.AllMountainsAsync();
         }
     }
 }
