@@ -94,6 +94,14 @@
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
+                <AppBarElementContainer x:Name="FilterIndicator"
+                                        Visibility="Collapsed"
+                                        Margin="-16 0 0 0">
+                    <FontIcon Glyph="&#xE73E;"
+                              FontSize="12"
+                              Foreground="Coral"
+                              VerticalAlignment="Top" />
+                </AppBarElementContainer>
                 <AppBarButton Label="Group"
                               Width="80">
                     <AppBarButton.Icon>
@@ -108,6 +116,14 @@
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
+                <AppBarElementContainer x:Name="GroupIndicator"
+                                        Visibility="Collapsed"
+                                        Margin="-16 0 0 0">
+                    <FontIcon Glyph="&#xE73E;"
+                              FontSize="12"
+                              Foreground="Coral"
+                              VerticalAlignment="Top" />
+                </AppBarElementContainer>
             </CommandBar>
             <AutoSuggestBox x:Name="SearchBox"
                             QuerySubmitted="SearchBox_QuerySubmitted"
@@ -122,6 +138,14 @@
                         Margin="0 0 8 0">
                 <AppBarButton Label="Search"
                               Click="SearchButton_Click" />
+                <AppBarElementContainer x:Name="SearchIndicator"
+                                        Visibility="Collapsed"
+                                        Margin="-16 0 0 0">
+                    <FontIcon Glyph="&#xE73E;"
+                              FontSize="12"
+                              Foreground="Coral"
+                              VerticalAlignment="Top" />
+                </AppBarElementContainer>
                 <AppBarButton x:Name="DetailsButton"
                               Click="DetailsButton_Click"
                               Icon="View"

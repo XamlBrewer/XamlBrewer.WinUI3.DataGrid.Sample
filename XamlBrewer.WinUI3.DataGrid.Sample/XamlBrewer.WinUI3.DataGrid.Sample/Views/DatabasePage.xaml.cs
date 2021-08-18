@@ -2,7 +2,6 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Navigation;
-using System.Threading.Tasks;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
 using XamlBrewer.WinUI3.DataGrid.Sample.ViewModels;
 using ctWinUI = CommunityToolkit.WinUI.UI.Controls;
@@ -12,8 +11,8 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
     public sealed partial class DatabasePage : Page
     {
         private MountainViewModel _viewModel = new MountainViewModel();
+        private DataGridDisplayMode _displayMode = DataGridDisplayMode.Default;
         private long _token;
-
         private string _grouping;
 
         public DatabasePage()
@@ -38,6 +37,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         private async void DatabasePage_Loaded(object sender, RoutedEventArgs e)
         {
             await _viewModel.InitializeAsync();
+            _displayMode = DataGridDisplayMode.Default;
             DataGrid.ItemsSource = await _viewModel.AllMountainsAsync();
             DataGrid.Columns[0].SortDirection = ctWinUI.DataGridSortDirection.Ascending;
             DataGrid.SelectionChanged += DataGrid_SelectionChanged;
@@ -56,9 +56,9 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         private async void DataGrid_Sorting(object sender, ctWinUI.DataGridColumnEventArgs e)
         {
-            SearchBox.Text = string.Empty;
+            _displayMode = DataGridDisplayMode.UserSorted;
 
-            // Add sorting indicator, and sort
+            // Sort, and add sorting indicator
             var isAscending = e.Column.SortDirection == null || e.Column.SortDirection == ctWinUI.DataGridSortDirection.Descending;
             DataGrid.ItemsSource = await _viewModel.SortedMountainsAsync(e.Column.Tag.ToString(), isAscending);
             e.Column.SortDirection = isAscending
@@ -82,37 +82,37 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         private async void FilterRankLow_Click(object sender, RoutedEventArgs e)
         {
-            SearchBox.Text = string.Empty;
+            _displayMode = DataGridDisplayMode.Filtered;
             DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.Rank_Low);
         }
 
         private async void FilterRankHigh_Click(object sender, RoutedEventArgs e)
         {
-            SearchBox.Text = string.Empty;
+            _displayMode = DataGridDisplayMode.Filtered;
             DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.Rank_High);
         }
 
         private async void FilterHeightLow_Click(object sender, RoutedEventArgs e)
         {
-            SearchBox.Text = string.Empty;
+            _displayMode = DataGridDisplayMode.Filtered;
             DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.Height_Low);
         }
 
         private async void FilterHeightHigh_Click(object sender, RoutedEventArgs e)
         {
-            SearchBox.Text = string.Empty;
+            _displayMode = DataGridDisplayMode.Filtered;
             DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.Height_High);
         }
 
         private async void FilterClear_Click(object sender, RoutedEventArgs e)
         {
-            SearchBox.Text = string.Empty;
+            _displayMode = DataGridDisplayMode.Default;
             DataGrid.ItemsSource = await _viewModel.FilteredMountainsAsync(MountainViewModel.FilterOptions.All);
         }
 
         private void ApplyGrouping(string grouping)
         {
-            SearchBox.Text = string.Empty;
+            _displayMode = DataGridDisplayMode.Grouped;
             _grouping = grouping;
             DataGrid.RowGroupHeaderPropertyNameAlternative = _grouping;
             DataGrid.ItemsSource = _viewModel.GroupedMountains(_grouping).View;
@@ -130,22 +130,51 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         private async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            _displayMode = DataGridDisplayMode.Search;
             DataGrid.ItemsSource = await _viewModel.SearchMountainsByNameAsync(args.QueryText);
         }
 
         private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
+            _displayMode = DataGridDisplayMode.Search;
             DataGrid.ItemsSource = await _viewModel.SearchMountainsByNameAsync(SearchBox.Text);
         }
 
         private void DataGridItemsSourceChangedCallback(DependencyObject sender, DependencyProperty dp)
         {
+            // Binding could do most of this ...
+
+            // Remove Display Mode Indicators;
+            FilterIndicator.Visibility = Visibility.Collapsed;
+            GroupIndicator.Visibility = Visibility.Collapsed;
+            SearchIndicator.Visibility = Visibility.Collapsed;
+
+            // Remove Sort Indicators.
             if (dp == ctWinUI.DataGrid.ItemsSourceProperty)
             {
                 foreach (var column in (sender as ctWinUI.DataGrid).Columns)
                 {
                     column.SortDirection = null;
                 }
+            }
+
+            if (_displayMode == DataGridDisplayMode.Filtered)
+            {
+                FilterIndicator.Visibility = Visibility.Visible;
+            }
+
+            if (_displayMode == DataGridDisplayMode.Grouped)
+            {
+                GroupIndicator.Visibility = Visibility.Visible;
+            }
+
+            if (_displayMode == DataGridDisplayMode.Search)
+            {
+                SearchIndicator.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SearchBox.Text = string.Empty;
             }
         }
 
@@ -158,6 +187,15 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         {
             await _viewModel.ResetAsync();
             DataGrid.ItemsSource = await _viewModel.AllMountainsAsync();
+        }
+
+        private enum DataGridDisplayMode
+        {
+            Default,
+            UserSorted,
+            Filtered,
+            Grouped,
+            Search
         }
     }
 }
