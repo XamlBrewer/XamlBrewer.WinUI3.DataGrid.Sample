@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
       xmlns:services="using:XamlBrewer.WinUI3.DataGrid.Sample.Services"
+      xmlns:models="using:XamlBrewer.WinUI3.DataGrid.Sample.Models"
       mc:Ignorable="d"
       Background="Transparent">
     <Grid Margin="0 0 0 80">
@@ -162,10 +163,10 @@
                 <ctWinUI:DataGridTemplateColumn Header="Height"
                                                 Tag="Height">
                     <ctWinUI:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:Mountain">
                             <Slider Minimum="7200"
                                     Maximum="8848"
-                                    Value="{Binding Height}"
+                                    Value="{x:Bind Height}"
                                     IsHitTestVisible="False"
                                     IsTabStop="False"
                                     ThumbToolTipValueConverter="{StaticResource SliderValueConverter}" />
