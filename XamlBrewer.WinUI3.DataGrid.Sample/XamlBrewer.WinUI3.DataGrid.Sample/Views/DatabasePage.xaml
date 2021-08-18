@@ -167,7 +167,7 @@
                           RowDetailsVisibilityMode="Collapsed"
                           Grid.Row="1">
             <ctWinUI:DataGrid.Resources>
-                <services:SliderValueConverter x:Key="SliderValueConverter" />
+                <!--<services:SliderValueConverter x:Key="SliderValueConverter" />-->
                 <!--<Color x:Key="DataGridColumnHeaderBackgroundColor">Silver</Color>-->
                 <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
                                  Opacity=".5" />
@@ -188,12 +188,14 @@
                                                 Tag="Height">
                     <ctWinUI:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate x:DataType="models:Mountain">
-                            <Slider Minimum="7200"
-                                    Maximum="8848"
-                                    Value="{x:Bind Height}"
-                                    IsHitTestVisible="False"
-                                    IsTabStop="False"
-                                    ThumbToolTipValueConverter="{StaticResource SliderValueConverter}" />
+                            <Grid Background="Transparent"
+                                  ToolTipService.ToolTip="{x:Bind HeightDescription}">
+                                <Slider Minimum="7200"
+                                        Maximum="8848"
+                                        Value="{x:Bind Height}"
+                                        IsHitTestVisible="False"
+                                        IsTabStop="False" />
+                            </Grid>
                         </DataTemplate>
                     </ctWinUI:DataGridTemplateColumn.CellTemplate>
                 </ctWinUI:DataGridTemplateColumn>

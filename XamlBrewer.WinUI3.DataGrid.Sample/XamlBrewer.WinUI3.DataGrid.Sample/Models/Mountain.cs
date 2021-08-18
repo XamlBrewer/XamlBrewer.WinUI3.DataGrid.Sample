@@ -12,8 +12,12 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Models
         // private Mountain _parent;
         private string _parentMountain;
 
+        // Key
+
         [Key]
         public int Id { get; set; }
+
+        // Fields
 
         public uint Rank
         {
@@ -52,5 +56,9 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Models
         public uint FirstAscent { get; set; }
 
         public string Ascents { get; set; }
+
+        // Helpers
+
+        public string HeightDescription => $"{Height} m";
     }
 }
