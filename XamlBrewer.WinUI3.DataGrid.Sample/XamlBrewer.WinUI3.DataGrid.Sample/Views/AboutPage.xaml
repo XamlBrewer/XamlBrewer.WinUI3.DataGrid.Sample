@@ -9,7 +9,9 @@
 
     <Grid>
         <TextBlock>
-            <Run>Based on Windows Community Toolkit Sample App</Run>
+            <Run>This WinUI 3 Desktop app tests the Community Toolkit DataGrid Control.</Run>
+            <LineBreak /><LineBreak />
+            <Run Text="Based on " /><Hyperlink NavigateUri="https://aka.ms/windowstoolkitapp">Windows Community Toolkit Sample App</Hyperlink><Run Text="." />
             <LineBreak /><LineBreak />
             <Run FontWeight="Bold">Windows Community Toolkit</Run>
             <LineBreak />
