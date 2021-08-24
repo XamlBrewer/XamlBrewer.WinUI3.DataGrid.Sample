@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 using XamlBrewer.WinUI3.DataGrid.Sample.DataAccessLayer;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
@@ -15,7 +16,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
     {
         public async Task<IEnumerable<Mountain>> AllMountainsAsync()
         {
-            using (var dbContext = new MountainDbContext())
+            using (MountainDbContext dbContext = new())
             {
                 return await dbContext.Mountains.OrderBy(m => m.Rank).AsNoTracking().ToListAsync();
             }
@@ -23,7 +24,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 
         public async Task<IEnumerable<Mountain>> SortedMountainsAsync(string sortBy, bool ascending)
         {
-            using (var dbContext = new MountainDbContext())
+            using (MountainDbContext dbContext = new())
             {
                 return await dbContext.Mountains.OrderBy(sortBy, !ascending).AsNoTracking().ToListAsync();
             }
@@ -31,7 +32,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 
         public async Task<IEnumerable<Mountain>> SearchMountainsByNameAsync(string queryText)
         {
-            using (var dbContext = new MountainDbContext())
+            using (MountainDbContext dbContext = new())
             {
                 return await dbContext.Mountains
                             .Where(m => EF.Functions.Like(m.Name, $"%{queryText}%"))
@@ -52,7 +53,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 
         public async Task<IEnumerable<Mountain>> FilteredMountainsAsync(FilterOptions filterBy)
         {
-            using var dbContext = new MountainDbContext();
+            using MountainDbContext dbContext = new();
 
             switch (filterBy)
             {
@@ -70,6 +71,9 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 
                 case FilterOptions.Height_Low:
                     return await dbContext.Mountains.Where(m => m.Height < 8000).OrderBy(m => m.Rank).AsNoTracking().ToListAsync();
+
+                default:
+                    break;
             }
 
             return await dbContext.Mountains.AsNoTracking().ToListAsync();
@@ -77,11 +81,11 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 
         public CollectionViewSource GroupedMountains(string groupBy = "Range")
         {
-            using var dbContext = new MountainDbContext();
+            using MountainDbContext dbContext = new();
 
             // No ToListAsync() here, since we bail out of Entity Framework to do the Grouping.
 
-            var query = dbContext.Mountains
+            IEnumerable<GroupInfoCollection<string, Mountain>> query = dbContext.Mountains
                             .OrderBy(m => m.Range)
                             .ThenBy(m => m.Rank)
                             .AsNoTracking()
@@ -97,7 +101,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
                             .GroupBy(m => m.ParentMountain, (key, list) => new GroupInfoCollection<string, Mountain>(key, list));
             }
 
-            var groupedItems = new CollectionViewSource
+            CollectionViewSource groupedItems = new()
             {
                 IsSourceGrouped = true,
                 Source = query
@@ -131,7 +135,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 
         public async Task InitializeAsync()
         {
-            using (var dbContext = new MountainDbContext())
+            using (MountainDbContext dbContext = new())
             {
                 // Ensure database is created
                 dbContext.Database.EnsureCreated();
@@ -139,7 +143,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
                 // Ensure table is populated
                 if (!dbContext.Mountains.Any())
                 {
-                    var items = await new DataGridDataSource().GetDataAsync();
+                    IEnumerable<DataGridDataItem> items = await new DataGridDataSource().GetDataAsync();
                     dbContext.AddRange(items.Select(i => new Mountain
                     {
                         Rank = i.Rank,
@@ -160,7 +164,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 
         public async Task ResetAsync()
         {
-            using (var dbContext = new MountainDbContext())
+            using (MountainDbContext dbContext = new())
             {
                 // Ensure database is removed
                 dbContext.Database.EnsureDeleted();
@@ -178,18 +182,18 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
             bool desc)
         {
             string command = desc ? "OrderByDescending" : "OrderBy";
-            var type = typeof(TEntity);
-            var property = type.GetProperty(orderByProperty);
-            var parameter = Expression.Parameter(
+            Type type = typeof(TEntity);
+            PropertyInfo property = type.GetProperty(orderByProperty);
+            ParameterExpression parameter = Expression.Parameter(
                     type,
                     "p");
-            var propertyAccess = Expression.MakeMemberAccess(
+            MemberExpression propertyAccess = Expression.MakeMemberAccess(
                     parameter,
                     property);
-            var orderByExpression = Expression.Lambda(
+            LambdaExpression orderByExpression = Expression.Lambda(
                     propertyAccess,
                     parameter);
-            var resultExpression = Expression.Call(
+            MethodCallExpression resultExpression = Expression.Call(
                     typeof(Queryable),
                     command,
                     new Type[] { type, property.PropertyType },

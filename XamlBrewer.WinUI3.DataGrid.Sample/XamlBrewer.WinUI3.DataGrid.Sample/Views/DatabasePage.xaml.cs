@@ -17,9 +17,9 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         public DatabasePage()
         {
-            this.InitializeComponent();
-            this.Loaded += DatabasePage_Loaded;
-            this.Unloaded += DatabasePage_Unloaded;
+            InitializeComponent();
+            Loaded += DatabasePage_Loaded;
+            Unloaded += DatabasePage_Unloaded;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -59,7 +59,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             _displayMode = DataGridDisplayMode.UserSorted;
 
             // Sort, and add sorting indicator
-            var isAscending = e.Column.SortDirection == null || e.Column.SortDirection == ctWinUI.DataGridSortDirection.Descending;
+            bool isAscending = e.Column.SortDirection is null or (ctWinUI.DataGridSortDirection?)ctWinUI.DataGridSortDirection.Descending;
             DataGrid.ItemsSource = await _viewModel.SortedMountainsAsync(e.Column.Tag.ToString(), isAscending);
             e.Column.SortDirection = isAscending
                 ? ctWinUI.DataGridSortDirection.Ascending
@@ -70,14 +70,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         {
             ICollectionViewGroup group = e.RowGroupHeader.CollectionViewGroup;
             Mountain item = group.GroupItems[0] as Mountain;
-            if (_grouping == "ParentMountain")
-            {
-                e.RowGroupHeader.PropertyValue = item.ParentMountain;
-            }
-            else
-            {
-                e.RowGroupHeader.PropertyValue = item.Range;
-            }
+            e.RowGroupHeader.PropertyValue = _grouping == "ParentMountain" ? item.ParentMountain : item.Range;
         }
 
         private async void FilterRankLow_Click(object sender, RoutedEventArgs e)

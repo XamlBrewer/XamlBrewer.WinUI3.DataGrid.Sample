@@ -12,7 +12,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.DataAccessLayer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "mountains.db");
+            string path = Path.Combine(ApplicationData.Current.LocalFolder.Path, "mountains.db");
 
             // File.Delete(path); // Reset to factory settings.
 
@@ -23,7 +23,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.DataAccessLayer
             }
              .ToString();
 
-            var connection = new SqliteConnection(connectionStringBuilder);
+            SqliteConnection connection = new SqliteConnection(connectionStringBuilder);
             optionsBuilder.UseSqlite(connection);
         }
     }

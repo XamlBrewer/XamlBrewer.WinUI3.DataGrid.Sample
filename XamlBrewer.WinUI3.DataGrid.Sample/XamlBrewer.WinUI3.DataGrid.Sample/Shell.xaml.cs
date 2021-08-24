@@ -9,7 +9,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample
         {
             Title = "XAML Brewer WinUI 3 DataGrid Sample";
 
-            this.InitializeComponent();
+            InitializeComponent();
 
             Root.RequestedTheme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
         }

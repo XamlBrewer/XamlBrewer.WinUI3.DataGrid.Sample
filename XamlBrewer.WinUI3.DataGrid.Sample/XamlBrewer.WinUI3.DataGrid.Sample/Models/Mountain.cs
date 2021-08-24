@@ -9,7 +9,6 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Models
         private string _name;
         private uint _height;
         private string _range;
-        // private Mountain _parent;
         private string _parentMountain;
 
         // Key

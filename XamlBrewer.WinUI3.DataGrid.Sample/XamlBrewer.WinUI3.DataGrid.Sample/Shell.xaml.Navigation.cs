@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using XamlBrewer.WinUI3.DataGrid.Sample.Views;
-using XamlBrewer.WinUI3.Services;
 
 namespace XamlBrewer.WinUI3.DataGrid.Sample
 {
@@ -12,9 +11,6 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample
     {
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
-            // Navigates, but does not update the Menu.
-            // ContentFrame.Navigate(typeof(HomePage));
-
             SetCurrentNavigationViewItem(GetNavigationViewItems(typeof(HomePage)).First());
         }
 
@@ -25,7 +21,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample
 
         public List<NavigationViewItem> GetNavigationViewItems()
         {
-            var result = new List<NavigationViewItem>();
+            List<NavigationViewItem> result = new();
             var items = NavigationView.MenuItems.Select(i => (NavigationViewItem)i).ToList();
             items.AddRange(NavigationView.FooterMenuItems.Select(i => (NavigationViewItem)i));
             result.AddRange(items);
