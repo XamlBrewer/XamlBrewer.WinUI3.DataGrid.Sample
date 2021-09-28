@@ -34,8 +34,8 @@
                         IsSettingsVisible="False"
                         Margin="0">
             <NavigationView.PaneCustomContent>
-                <!-- TODO -->
-                <HyperlinkButton Margin="8 0">Blog post</HyperlinkButton>
+                <HyperlinkButton NavigateUri="https://xamlbrewer.wordpress.com/2021/09/28/using-the-windows-community-toolkit-datagrid-with-winui-3-and-entity-framework-core/"
+                                 Margin="8 0">Blog post</HyperlinkButton>
             </NavigationView.PaneCustomContent>
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Home"
