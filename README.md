@@ -11,6 +11,7 @@ Features include
 * grouping rows
 * searching for values à la sql LIKE
 * instant theme switching
+* pagination
 * ...
 
 ## Some screenshots
@@ -18,3 +19,5 @@ Features include
 ![Screenshot](Assets/HomeGroup.png?raw=true)
 
 ![Screenshot](Assets/DatabaseSearch.png?raw=true)
+
+![Screenshot](Assets/Pagination.png?raw=true)
