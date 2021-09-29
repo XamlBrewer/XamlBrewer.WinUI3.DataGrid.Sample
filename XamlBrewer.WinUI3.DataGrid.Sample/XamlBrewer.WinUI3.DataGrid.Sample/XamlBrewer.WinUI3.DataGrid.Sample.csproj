@@ -14,6 +14,7 @@
     <Content Remove="Assets\background.jpg" />
     <Content Remove="Assets\database.png" />
     <Content Remove="Assets\Home.png" />
+    <Content Remove="Assets\Pager.png" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\mtns.csv" />
@@ -21,6 +22,7 @@
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\DatabasePage.xaml" />
     <None Remove="Views\HomePage.xaml" />
+    <None Remove="Views\PaginationPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +33,12 @@
     <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.4" />
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.0" />
     <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\PaginationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

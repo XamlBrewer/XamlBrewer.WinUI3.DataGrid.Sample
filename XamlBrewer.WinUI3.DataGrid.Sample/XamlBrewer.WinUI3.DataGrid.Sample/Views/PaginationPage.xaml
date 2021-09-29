@@ -1,0 +1,117 @@
+﻿<Page x:Class="XamlBrewer.WinUI3.DataGrid.Sample.Views.PaginationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:XamlBrewer.WinUI3.DataGrid.Sample.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:models="using:XamlBrewer.WinUI3.DataGrid.Sample.Models"
+      xmlns:viewModels="using:XamlBrewer.WinUI3.DataGrid.Sample.ViewModels"
+      xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
+      mc:Ignorable="d"
+      Background="Transparent">
+    <Page.DataContext>
+        <viewModels:PaginationPageViewModel />
+    </Page.DataContext>
+    <Grid Margin="0 0 0 80">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Background="{StaticResource SystemAccentColorBrush}"
+                    Margin="0 0 0 16"
+                    CornerRadius="4"
+                    Height="52">
+            <CommandBar DefaultLabelPosition="Right"
+                        Background="Transparent"
+                        VerticalAlignment="Center"
+                        OverflowButtonVisibility="Collapsed">
+                <AppBarButton ToolTipService.ToolTip="First"
+                              Icon="Previous"
+                              Command="{x:Bind ViewModel.FirstAsyncCommand, Mode=OneWay}"
+                              Foreground="{ThemeResource SystemAccentColor}" />
+                <AppBarButton ToolTipService.ToolTip="Previous"
+                              Icon="Back"
+                              Command="{x:Bind ViewModel.PreviousAsyncCommand, Mode=OneWay}"
+                              Foreground="{ThemeResource SystemAccentColor}" />
+                <AppBarElementContainer VerticalContentAlignment="Center">
+                    <TextBlock Text="Page"
+                               Margin="12 0 8 0" />
+                </AppBarElementContainer>
+                <AppBarElementContainer VerticalContentAlignment="Center">
+                    <TextBlock Text="{x:Bind ViewModel.PageNumber, Mode=OneWay}" />
+                </AppBarElementContainer>
+                <AppBarElementContainer VerticalContentAlignment="Center">
+                    <TextBlock Text="of"
+                               Margin="8 0" />
+                </AppBarElementContainer>
+                <AppBarElementContainer VerticalContentAlignment="Center">
+                    <TextBlock Text="{x:Bind ViewModel.PageCount, Mode=OneWay}"
+                               Margin="0 0 12 0" />
+                </AppBarElementContainer>
+                <AppBarButton ToolTipService.ToolTip="Next"
+                              Icon="Forward"
+                              Command="{x:Bind ViewModel.NextAsyncCommand, Mode=OneWay}"
+                              Foreground="{ThemeResource SystemAccentColor}" />
+                <AppBarButton ToolTipService.ToolTip="Last"
+                              Icon="Next"
+                              Command="{x:Bind ViewModel.LastAsyncCommand, Mode=OneWay}"
+                              Foreground="{ThemeResource SystemAccentColor}" />
+                <AppBarSeparator />
+                <AppBarElementContainer VerticalContentAlignment="Center">
+                    <ComboBox ItemsSource="{x:Bind ViewModel.PageSizes}"
+                              SelectedItem="{x:Bind ViewModel.PageSize, Mode=TwoWay}" />
+                </AppBarElementContainer>
+                <AppBarElementContainer VerticalContentAlignment="Center">
+                    <TextBlock Text="rows per page"
+                               Margin="8 0" />
+                </AppBarElementContainer>
+            </CommandBar>
+        </StackPanel>
+        <ctWinUI:DataGrid x:Name="DataGrid"
+                          ItemsSource="{x:Bind ViewModel.Mountains, Mode=OneWay}"
+                          AutoGenerateColumns="False"
+                          CanUserSortColumns="False"
+                          SelectionMode="Single"
+                          IsReadOnly="True"
+                          RowDetailsVisibilityMode="Collapsed"
+                          Grid.Row="1">
+            <ctWinUI:DataGrid.Resources>
+                <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
+                                 Opacity=".5" />
+                <SolidColorBrush x:Key="DataGridCellFocusVisualPrimaryBrush">Transparent</SolidColorBrush>
+                <SolidColorBrush x:Key="DataGridCellFocusVisualSecondaryBrush">Transparent</SolidColorBrush>
+            </ctWinUI:DataGrid.Resources>
+            <ctWinUI:DataGrid.Columns>
+                <ctWinUI:DataGridTextColumn Header="Rank"
+                                            Binding="{Binding Rank}"
+                                            Tag="Rank" />
+                <ctWinUI:DataGridComboBoxColumn Header="Mountain"
+                                                Binding="{Binding Name}"
+                                                Tag="Name" />
+                <ctWinUI:DataGridTemplateColumn Header="Height"
+                                                Tag="Height">
+                    <ctWinUI:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="models:Mountain">
+                            <Grid Background="Transparent"
+                                  ToolTipService.ToolTip="{x:Bind HeightDescription}">
+                                <Slider Minimum="7200"
+                                        Maximum="8848"
+                                        Value="{x:Bind Height}"
+                                        IsHitTestVisible="False"
+                                        IsTabStop="False" />
+                            </Grid>
+                        </DataTemplate>
+                    </ctWinUI:DataGridTemplateColumn.CellTemplate>
+                </ctWinUI:DataGridTemplateColumn>
+                <ctWinUI:DataGridTextColumn Header="Range"
+                                            Binding="{Binding Range}"
+                                            Tag="Range" />
+                <ctWinUI:DataGridTextColumn Header="Parent Mountain"
+                                            Binding="{Binding ParentMountain}"
+                                            Tag="ParentMountain" />
+            </ctWinUI:DataGrid.Columns>
+        </ctWinUI:DataGrid>
+    </Grid>
+</Page>

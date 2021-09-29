@@ -54,6 +54,14 @@
                                     ShowAsMonochrome="False" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem Content="Pagination"
+                                    Tag="XamlBrewer.WinUI3.DataGrid.Sample.Views.PaginationPage"
+                                    ToolTipService.ToolTip="Pagination">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="/Assets/Pager.png"
+                                    ShowAsMonochrome="False" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="About"
