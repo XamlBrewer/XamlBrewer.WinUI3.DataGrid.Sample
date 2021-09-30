@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XamlBrewer.EFCore.Services;
 using XamlBrewer.WinUI3.DataGrid.Sample.DataAccessLayer;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
-using XamlBrewer.WinUI3.DataGrid.Sample.Services;
 
 namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
 {
@@ -22,6 +22,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
         {
             FirstAsyncCommand = new AsyncRelayCommand(
                 async () => await GetMountains(1, _pageSize),
+                // async () => await GetMountains(1000, _pageSize), // Test for out of range.
                 () => _pageNumber != 1
               );
             PreviousAsyncCommand = new AsyncRelayCommand(
@@ -111,7 +112,9 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.ViewModels
         {
             using MountainDbContext dbContext = new();
             PaginatedList<Mountain> pagedMountains = await PaginatedList<Mountain>.CreateAsync(
-                dbContext.Mountains.OrderBy(m => m.Rank),
+                dbContext.Mountains
+                    // .Where(m => m.Rank == 1000000) // Test for empty result.
+                    .OrderBy(m => m.Rank),
                 pageIndex,
                 pageSize);
             PageNumber = pagedMountains.PageIndex;

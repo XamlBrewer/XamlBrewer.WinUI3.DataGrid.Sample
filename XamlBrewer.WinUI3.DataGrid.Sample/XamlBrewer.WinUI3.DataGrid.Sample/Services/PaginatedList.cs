@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace XamlBrewer.WinUI3.DataGrid.Sample.Services
+namespace XamlBrewer.EFCore.Services
 {
     public class PaginatedList<T> : List<T>
     {
@@ -19,17 +19,23 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Services
             AddRange(items);
         }
 
-        public static PaginatedList<T> Create(IQueryable<T> source, int pageIndex, int pageSize)
-        {
-            int count = source.Count();
-            List<T> items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-            return new PaginatedList<T>(items, count, pageIndex, pageSize);
-        }
-
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
             int count = await source.CountAsync();
+            if (count == 0)
+            {
+                // No results -> return page 0.
+                return new PaginatedList<T>(new List<T>(), 0, 0, pageSize);
+            }
+
             List<T> items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            if (items.Count == 0)
+            {
+                // Requested page is out of range -> return last page.
+                pageIndex = (int)Math.Ceiling(count / (double)pageSize);
+                items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            }
+
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
     }

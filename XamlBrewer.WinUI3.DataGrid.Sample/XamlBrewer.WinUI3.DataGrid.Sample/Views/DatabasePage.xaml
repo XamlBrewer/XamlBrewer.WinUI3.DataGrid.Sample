@@ -167,8 +167,6 @@
                           RowDetailsVisibilityMode="Collapsed"
                           Grid.Row="1">
             <ctWinUI:DataGrid.Resources>
-                <!--<services:SliderValueConverter x:Key="SliderValueConverter" />-->
-                <!--<Color x:Key="DataGridColumnHeaderBackgroundColor">Silver</Color>-->
                 <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
                                  Opacity=".5" />
                 <SolidColorBrush x:Key="DataGridCellFocusVisualPrimaryBrush">Transparent</SolidColorBrush>
@@ -181,9 +179,6 @@
                 <ctWinUI:DataGridComboBoxColumn Header="Mountain"
                                                 Binding="{Binding Name}"
                                                 Tag="Name" />
-                <!--<ctWinUI:DataGridTextColumn Header="Height (m)"
-                                            Binding="{Binding Height}"
-                                            Tag="Height" />-->
                 <ctWinUI:DataGridTemplateColumn Header="Height"
                                                 Tag="Height">
                     <ctWinUI:DataGridTemplateColumn.CellTemplate>
