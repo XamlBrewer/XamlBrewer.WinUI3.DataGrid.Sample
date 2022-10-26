@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
+	  <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>XamlBrewer.WinUI3.DataGrid.Sample</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -9,13 +9,6 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Remove="Assets\About.png" />
-    <Content Remove="Assets\background.jpg" />
-    <Content Remove="Assets\database.png" />
-    <Content Remove="Assets\Home.png" />
-    <Content Remove="Assets\Pager.png" />
-  </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\mtns.csv" />
     <None Remove="Shell.xaml" />
@@ -26,12 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10" />
-    <PackageReference Include="Microsoft.ProjectReunion" Version="0.8.4" />
-    <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.4" />
-    <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.4" />
-    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.0" />
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+	  <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.10" />
+	  <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
