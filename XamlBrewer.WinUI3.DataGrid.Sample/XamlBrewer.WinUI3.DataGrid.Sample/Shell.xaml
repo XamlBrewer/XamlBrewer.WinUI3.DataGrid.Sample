@@ -62,6 +62,14 @@
                                     ShowAsMonochrome="False" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem Content="Tabbed Details"
+                                    Tag="XamlBrewer.WinUI3.DataGrid.Sample.Views.TabViewPage"
+                                    ToolTipService.ToolTip="Tabbed Details">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="/Assets/Tab.png"
+                                    ShowAsMonochrome="False" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Content="About"
