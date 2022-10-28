@@ -81,7 +81,7 @@
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
             <Frame x:Name="ContentFrame"
-                   Padding="16 0 16 16">
+                   Padding="16">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition>

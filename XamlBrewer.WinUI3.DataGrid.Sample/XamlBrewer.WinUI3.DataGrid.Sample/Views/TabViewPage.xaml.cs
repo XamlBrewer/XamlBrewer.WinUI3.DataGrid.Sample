@@ -171,11 +171,6 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             }
         }
 
-        private void DetailsButton_Click(object sender, RoutedEventArgs e)
-        {
-            DataGrid.RowDetailsVisibilityMode = 2 - DataGrid.RowDetailsVisibilityMode;
-        }
-
         private async void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             await _viewModel.ResetAsync();
@@ -189,6 +184,41 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             Filtered,
             Grouped,
             Search
+        }
+
+        private void DetailsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var item = DataGrid.SelectedItem as Mountain;
+            DetailsPage page = new()
+            {
+                DataContext = item
+            };
+
+            TabViewItem tabViewItem = new()
+            {
+                Header = item.Name,
+                Content = page,
+                CanDrag = true
+            };
+
+            tvMountains.TabItems.Add(tabViewItem);
+        }
+
+        private void TabView_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
+        {
+            var tab = args.Tab;
+            tvMountains.TabItems.Remove(tab);
+
+            DetailsPage page = new();
+            page.ShowTabs();
+            page.AddTab(tab);
+
+            Window window = new()
+            {
+                Content = page
+            };
+
+            window.Activate();
         }
     }
 }

@@ -9,198 +9,210 @@
       xmlns:models="using:XamlBrewer.WinUI3.DataGrid.Sample.Models"
       mc:Ignorable="d"
       Background="Transparent">
-    <Grid Margin="0 0 0 80">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.Resources>
-            <DataTemplate x:Key="RowDetailsTemplate">
-                <Grid Padding="10"
-                      BorderBrush="{StaticResource SystemAccentColorBrush}"
-                      BorderThickness=".5 0 .5 .5"
-                      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                    <!-- Strange that this does not work: -->
-                    <!--<Grid.Background>
+    <TabView x:Name="tvMountains"
+             Margin="0 0 0 80"
+             IsAddTabButtonVisible="False"
+             BorderThickness="1"
+             CornerRadius="4"
+             CanDragTabs="True"
+             TabDroppedOutside="TabView_TabDroppedOutside">
+        <TabViewItem Header="All"
+                     IsClosable="False"
+                     CanDrag="False">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <DataTemplate x:Key="RowDetailsTemplate">
+                        <Grid Padding="10"
+                              BorderBrush="{StaticResource SystemAccentColorBrush}"
+                              BorderThickness=".5 0 .5 .5"
+                              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                            <!-- Strange that this does not work: -->
+                            <!--<Grid.Background>
                         <SolidColorBrush Color="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
                     </Grid.Background>-->
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Coordinates: "
-                               FontWeight="SemiBold" />
-                    <TextBlock Grid.Row="1"
-                               Text="Prominence (m): "
-                               FontWeight="SemiBold" />
-                    <TextBlock Grid.Row="2"
-                               Text="First Ascent (year): "
-                               FontWeight="SemiBold" />
-                    <TextBlock Grid.Row="3"
-                               Text="No. of ascents: "
-                               FontWeight="SemiBold" />
-                    <TextBlock Grid.Column="1"
-                               Text="{Binding Coordinates}"
-                               HorizontalAlignment="Right" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="1"
-                               Text="{Binding Prominence}"
-                               HorizontalAlignment="Right" />
-                    <TextBlock Grid.Row="2"
-                               Grid.Column="1"
-                               Text="{Binding FirstAscent}"
-                               HorizontalAlignment="Right" />
-                    <TextBlock Grid.Row="3"
-                               Grid.Column="1"
-                               Text="{Binding Ascents}"
-                               HorizontalAlignment="Right" />
-                </Grid>
-            </DataTemplate>
-        </Grid.Resources>
-        <!-- This cries for a Ribbon control. -->
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Left"
-                    Background="{StaticResource SystemAccentColorBrush}"
-                    Margin="0 0 0 16"
-                    CornerRadius="4"
-                    Height="52">
-            <CommandBar DefaultLabelPosition="Right"
-                        Background="Transparent"
-                        VerticalAlignment="Center">
-                <AppBarButton Icon="Filter"
-                              Label="Filter"
-                              Width="80">
-                    <AppBarButton.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem Text="Rank &lt; 50"
-                                            Click="FilterRankLow_Click" />
-                            <MenuFlyoutItem Text="Rank &gt; 50"
-                                            Click="FilterRankHigh_Click" />
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem x:Name="FilterHeightLow"
-                                            Text="Height &lt; 8000 m"
-                                            Click="FilterHeightLow_Click" />
-                            <MenuFlyoutItem Text="Height &gt; 8000 m"
-                                            Click="FilterHeightHigh_Click" />
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Text="Remove Filter"
-                                            Click="FilterClear_Click" />
-                        </MenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
-                <AppBarElementContainer x:Name="FilterIndicator"
-                                        Visibility="Collapsed"
-                                        Margin="-16 0 0 0">
-                    <FontIcon Glyph="&#xE73E;"
-                              FontSize="12"
-                              Foreground="Coral"
-                              VerticalAlignment="Top" />
-                </AppBarElementContainer>
-                <AppBarButton Label="Group"
-                              Width="80">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xF168;" />
-                    </AppBarButton.Icon>
-                    <AppBarButton.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem Text="Range"
-                                            Click="GroupByRange_Click" />
-                            <MenuFlyoutItem Text="Parent Mountain"
-                                            Click="GroupByParentMountain_Click" />
-                        </MenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
-                <AppBarElementContainer x:Name="GroupIndicator"
-                                        Visibility="Collapsed"
-                                        Margin="-16 0 0 0">
-                    <FontIcon Glyph="&#xE73E;"
-                              FontSize="12"
-                              Foreground="Coral"
-                              VerticalAlignment="Top" />
-                </AppBarElementContainer>
-            </CommandBar>
-            <AutoSuggestBox x:Name="SearchBox"
-                            QuerySubmitted="SearchBox_QuerySubmitted"
-                            QueryIcon="Find"
-                            Width="240"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Margin="8 0 0 0" />
-            <CommandBar DefaultLabelPosition="Right"
-                        Background="Transparent"
-                        VerticalAlignment="Center"
-                        Margin="0 0 8 0">
-                <AppBarButton Label="Search"
-                              Click="SearchButton_Click" />
-                <AppBarElementContainer x:Name="SearchIndicator"
-                                        Visibility="Collapsed"
-                                        Margin="-16 0 0 0">
-                    <FontIcon Glyph="&#xE73E;"
-                              FontSize="12"
-                              Foreground="Coral"
-                              VerticalAlignment="Top" />
-                </AppBarElementContainer>
-                <AppBarButton x:Name="DetailsButton"
-                              Click="DetailsButton_Click"
-                              Icon="View"
-                              Label="Details"
-                              IsEnabled="False" />
-                <AppBarButton Click="ResetButton_Click"
-                              Icon="Refresh"
-                              Label="Reset" />
-            </CommandBar>
-        </StackPanel>
-        <ctWinUI:DataGrid x:Name="DataGrid"
-                          AutoGenerateColumns="False"
-                          CanUserSortColumns="True"
-                          Sorting="DataGrid_Sorting"
-                          LoadingRowGroup="DataGrid_LoadingRowGroup"
-                          SelectionMode="Single"
-                          IsReadOnly="True"
-                          RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
-                          RowDetailsVisibilityMode="Collapsed"
-                          Grid.Row="1">
-            <ctWinUI:DataGrid.Resources>
-                <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
-                                 Opacity=".5" />
-                <SolidColorBrush x:Key="DataGridCellFocusVisualPrimaryBrush">Transparent</SolidColorBrush>
-                <SolidColorBrush x:Key="DataGridCellFocusVisualSecondaryBrush">Transparent</SolidColorBrush>
-            </ctWinUI:DataGrid.Resources>
-            <ctWinUI:DataGrid.Columns>
-                <ctWinUI:DataGridTextColumn Header="Rank"
-                                            Binding="{Binding Rank}"
-                                            Tag="Rank" />
-                <ctWinUI:DataGridComboBoxColumn Header="Mountain"
-                                                Binding="{Binding Name}"
-                                                Tag="Name" />
-                <ctWinUI:DataGridTemplateColumn Header="Height"
-                                                Tag="Height">
-                    <ctWinUI:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate x:DataType="models:Mountain">
-                            <Grid Background="Transparent"
-                                  ToolTipService.ToolTip="{x:Bind HeightDescription}">
-                                <Slider Minimum="7200"
-                                        Maximum="8848"
-                                        Value="{x:Bind Height}"
-                                        IsHitTestVisible="False"
-                                        IsTabStop="False" />
-                            </Grid>
-                        </DataTemplate>
-                    </ctWinUI:DataGridTemplateColumn.CellTemplate>
-                </ctWinUI:DataGridTemplateColumn>
-                <ctWinUI:DataGridTextColumn Header="Range"
-                                            Binding="{Binding Range}"
-                                            Tag="Range" />
-                <ctWinUI:DataGridTextColumn Header="Parent Mountain"
-                                            Binding="{Binding ParentMountain}"
-                                            Tag="ParentMountain" />
-            </ctWinUI:DataGrid.Columns>
-        </ctWinUI:DataGrid>
-    </Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Coordinates: "
+                                       FontWeight="SemiBold" />
+                            <TextBlock Grid.Row="1"
+                                       Text="Prominence (m): "
+                                       FontWeight="SemiBold" />
+                            <TextBlock Grid.Row="2"
+                                       Text="First Ascent (year): "
+                                       FontWeight="SemiBold" />
+                            <TextBlock Grid.Row="3"
+                                       Text="No. of ascents: "
+                                       FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding Coordinates}"
+                                       HorizontalAlignment="Right" />
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="1"
+                                       Text="{Binding Prominence}"
+                                       HorizontalAlignment="Right" />
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="1"
+                                       Text="{Binding FirstAscent}"
+                                       HorizontalAlignment="Right" />
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="1"
+                                       Text="{Binding Ascents}"
+                                       HorizontalAlignment="Right" />
+                        </Grid>
+                    </DataTemplate>
+                </Grid.Resources>
+                <!-- This cries for a Ribbon control. -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            Background="{StaticResource SystemAccentColorBrush}"
+                            Margin="0 0 0 16"
+                            CornerRadius="4"
+                            Height="52">
+                    <CommandBar DefaultLabelPosition="Right"
+                                Background="Transparent"
+                                VerticalAlignment="Center">
+                        <AppBarButton Icon="Filter"
+                                      Label="Filter"
+                                      Width="80">
+                            <AppBarButton.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Rank &lt; 50"
+                                                    Click="FilterRankLow_Click" />
+                                    <MenuFlyoutItem Text="Rank &gt; 50"
+                                                    Click="FilterRankHigh_Click" />
+                                    <MenuFlyoutSeparator />
+                                    <MenuFlyoutItem x:Name="FilterHeightLow"
+                                                    Text="Height &lt; 8000 m"
+                                                    Click="FilterHeightLow_Click" />
+                                    <MenuFlyoutItem Text="Height &gt; 8000 m"
+                                                    Click="FilterHeightHigh_Click" />
+                                    <MenuFlyoutSeparator />
+                                    <MenuFlyoutItem Text="Remove Filter"
+                                                    Click="FilterClear_Click" />
+                                </MenuFlyout>
+                            </AppBarButton.Flyout>
+                        </AppBarButton>
+                        <AppBarElementContainer x:Name="FilterIndicator"
+                                                Visibility="Collapsed"
+                                                Margin="-16 0 0 0">
+                            <FontIcon Glyph="&#xE73E;"
+                                      FontSize="12"
+                                      Foreground="Coral"
+                                      VerticalAlignment="Top" />
+                        </AppBarElementContainer>
+                        <AppBarButton Label="Group"
+                                      Width="80">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xF168;" />
+                            </AppBarButton.Icon>
+                            <AppBarButton.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Range"
+                                                    Click="GroupByRange_Click" />
+                                    <MenuFlyoutItem Text="Parent Mountain"
+                                                    Click="GroupByParentMountain_Click" />
+                                </MenuFlyout>
+                            </AppBarButton.Flyout>
+                        </AppBarButton>
+                        <AppBarElementContainer x:Name="GroupIndicator"
+                                                Visibility="Collapsed"
+                                                Margin="-16 0 0 0">
+                            <FontIcon Glyph="&#xE73E;"
+                                      FontSize="12"
+                                      Foreground="Coral"
+                                      VerticalAlignment="Top" />
+                        </AppBarElementContainer>
+                    </CommandBar>
+                    <AutoSuggestBox x:Name="SearchBox"
+                                    QuerySubmitted="SearchBox_QuerySubmitted"
+                                    QueryIcon="Find"
+                                    Width="240"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="8 0 0 0" />
+                    <CommandBar DefaultLabelPosition="Right"
+                                Background="Transparent"
+                                VerticalAlignment="Center"
+                                Margin="0 0 8 0">
+                        <AppBarButton Label="Search"
+                                      Click="SearchButton_Click" />
+                        <AppBarElementContainer x:Name="SearchIndicator"
+                                                Visibility="Collapsed"
+                                                Margin="-16 0 0 0">
+                            <FontIcon Glyph="&#xE73E;"
+                                      FontSize="12"
+                                      Foreground="Coral"
+                                      VerticalAlignment="Top" />
+                        </AppBarElementContainer>
+                        <AppBarButton x:Name="DetailsButton"
+                                      Click="DetailsButton_Click"
+                                      Icon="View"
+                                      Label="Details"
+                                      IsEnabled="False" />
+                        <AppBarButton Click="ResetButton_Click"
+                                      Icon="Refresh"
+                                      Label="Reset" />
+                    </CommandBar>
+                </StackPanel>
+                <ctWinUI:DataGrid x:Name="DataGrid"
+                                  AutoGenerateColumns="False"
+                                  CanUserSortColumns="True"
+                                  Sorting="DataGrid_Sorting"
+                                  LoadingRowGroup="DataGrid_LoadingRowGroup"
+                                  SelectionMode="Single"
+                                  IsReadOnly="True"
+                                  RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
+                                  RowDetailsVisibilityMode="Collapsed"
+                                  Grid.Row="1">
+                    <ctWinUI:DataGrid.Resources>
+                        <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush"
+                                         Opacity=".5" />
+                        <SolidColorBrush x:Key="DataGridCellFocusVisualPrimaryBrush">Transparent</SolidColorBrush>
+                        <SolidColorBrush x:Key="DataGridCellFocusVisualSecondaryBrush">Transparent</SolidColorBrush>
+                    </ctWinUI:DataGrid.Resources>
+                    <ctWinUI:DataGrid.Columns>
+                        <ctWinUI:DataGridTextColumn Header="Rank"
+                                                    Binding="{Binding Rank}"
+                                                    Tag="Rank" />
+                        <ctWinUI:DataGridComboBoxColumn Header="Mountain"
+                                                        Binding="{Binding Name}"
+                                                        Tag="Name" />
+                        <ctWinUI:DataGridTemplateColumn Header="Height"
+                                                        Tag="Height">
+                            <ctWinUI:DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate x:DataType="models:Mountain">
+                                    <Grid Background="Transparent"
+                                          ToolTipService.ToolTip="{x:Bind HeightDescription}">
+                                        <Slider Minimum="7200"
+                                                Maximum="8848"
+                                                Value="{x:Bind Height}"
+                                                IsHitTestVisible="False"
+                                                IsTabStop="False" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ctWinUI:DataGridTemplateColumn.CellTemplate>
+                        </ctWinUI:DataGridTemplateColumn>
+                        <ctWinUI:DataGridTextColumn Header="Range"
+                                                    Binding="{Binding Range}"
+                                                    Tag="Range" />
+                        <ctWinUI:DataGridTextColumn Header="Parent Mountain"
+                                                    Binding="{Binding ParentMountain}"
+                                                    Tag="ParentMountain" />
+                    </ctWinUI:DataGrid.Columns>
+                </ctWinUI:DataGrid>
+            </Grid>
+        </TabViewItem>
+    </TabView>
 </Page>
