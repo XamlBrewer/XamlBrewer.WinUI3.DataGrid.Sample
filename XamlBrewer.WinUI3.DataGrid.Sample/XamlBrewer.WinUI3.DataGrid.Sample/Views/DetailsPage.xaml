@@ -8,8 +8,6 @@
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TabView x:Name="tvMountains"
-                 AllowDrop="True"
-                 Visibility="Collapsed"></TabView>
+
     </Grid>
 </Page>

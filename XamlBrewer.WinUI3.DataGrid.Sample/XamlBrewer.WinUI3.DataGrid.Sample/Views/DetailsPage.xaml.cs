@@ -9,15 +9,5 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         {
             InitializeComponent();
         }
-
-        public void ShowTabs()
-        {
-            tvMountains.Visibility = Visibility.Visible;
-        }
-
-        public void AddTab(TabViewItem tab)
-        {
-            tvMountains.TabItems.Add(tab);
-        }
     }
 }

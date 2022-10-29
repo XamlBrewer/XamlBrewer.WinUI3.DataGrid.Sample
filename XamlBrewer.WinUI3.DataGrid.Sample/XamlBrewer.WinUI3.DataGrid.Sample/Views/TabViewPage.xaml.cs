@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Navigation;
+using XamlBrewer.WinUI.Controls;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
 using XamlBrewer.WinUI3.DataGrid.Sample.ViewModels;
 using ctWinUI = CommunityToolkit.WinUI.UI.Controls;
@@ -209,15 +210,9 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             var tab = args.Tab;
             tvMountains.TabItems.Remove(tab);
 
-            DetailsPage page = new();
-            page.ShowTabs();
-            page.AddTab(tab);
+            TabsWindow window = new();
 
-            Window window = new()
-            {
-                Content = page
-            };
-
+            window.AddTab(tab);
             window.Activate();
         }
     }
