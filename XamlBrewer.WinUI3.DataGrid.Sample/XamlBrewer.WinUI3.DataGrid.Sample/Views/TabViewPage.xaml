@@ -7,6 +7,7 @@
       xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
       xmlns:services="using:XamlBrewer.WinUI3.DataGrid.Sample.Services"
       xmlns:models="using:XamlBrewer.WinUI3.DataGrid.Sample.Models"
+      xmlns:ui="using:Windows.UI"
       mc:Ignorable="d"
       Background="Transparent">
     <TabView x:Name="tvMountains"
@@ -15,7 +16,14 @@
              BorderThickness="1"
              CornerRadius="4"
              CanDragTabs="True"
+             TabDragStarting="TabView_TabDragStarting"
              TabDroppedOutside="TabView_TabDroppedOutside">
+        <TabView.Resources>
+            <ResourceDictionary>
+                <StaticResource x:Key="TabViewItemHeaderBackgroundSelected"
+                                ResourceKey="SystemAccentColorBrush" />
+            </ResourceDictionary>
+        </TabView.Resources>
         <TabViewItem Header="All"
                      IsClosable="False"
                      CanDrag="False">

@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Navigation;
+using Windows.ApplicationModel.DataTransfer;
 using XamlBrewer.WinUI.Controls;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
 using XamlBrewer.WinUI3.DataGrid.Sample.ViewModels;
@@ -15,6 +16,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         private DataGridDisplayMode _displayMode = DataGridDisplayMode.Default;
         private long _token;
         private string _grouping;
+        private const string DataIdentifier = "MountainTabItem";
 
         public TabViewPage()
         {
@@ -214,6 +216,13 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
             window.AddTab(tab);
             window.Activate();
+        }
+
+        private void TabView_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
+        {
+            var firstItem = args.Tab;
+            args.Data.Properties.Add(DataIdentifier, firstItem);
+            args.Data.RequestedOperation = DataPackageOperation.Move;
         }
     }
 }
