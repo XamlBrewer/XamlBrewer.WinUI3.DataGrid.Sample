@@ -207,7 +207,8 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             {
                 Header = item.Name,
                 Content = page,
-                CanDrag = true
+                CanDrag = true,
+                IconSource = new BitmapIconSource() { UriSource = new System.Uri("ms-appx:///Assets/mountain.png") }
             };
 
             tvMountains.TabItems.Add(tabViewItem);

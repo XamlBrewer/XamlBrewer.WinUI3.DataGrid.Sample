@@ -27,6 +27,9 @@
         <TabViewItem Header="All"
                      IsClosable="False"
                      CanDrag="False">
+            <TabViewItem.IconSource>
+                <FontIconSource Glyph="&#xE8FD;" />
+            </TabViewItem.IconSource>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
