@@ -2,6 +2,8 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation.Collections;
+using XamlBrewer.WinUI3.DataGrid.Sample;
 
 namespace XamlBrewer.WinUI.Controls
 {
@@ -11,8 +13,6 @@ namespace XamlBrewer.WinUI.Controls
 
         public TabsWindow()
         {
-            Title = "Tabs";
-
             InitializeComponent();
         }
 
@@ -21,9 +21,20 @@ namespace XamlBrewer.WinUI.Controls
             tabView.TabItems.Add(tab);
         }
 
+        private void TabView_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
+        {
+            args.Data.Properties.Add(DataIdentifier, args.Tab);
+            args.Data.RequestedOperation = DataPackageOperation.Move;
+        }
+
         private void TabView_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
         {
+            var tab = args.Tab;
+            tabView.TabItems.Remove(tab);
 
+            TabsWindow window = new() { Title = (Application.Current as App).Title };
+            window.AddTab(tab);
+            window.Activate();
         }
 
         private void TabView_TabStripDrop(object sender, DragEventArgs e)
@@ -47,6 +58,23 @@ namespace XamlBrewer.WinUI.Controls
                     tvlv.Items.Remove(tvi);
                     tabView.TabItems.Add(tvi);
                 }
+            }
+        }
+
+        // Event is not raised when the drop is handled by another Window.
+        private void TabView_TabItemsChanged(TabView sender, IVectorChangedEventArgs args)
+        {
+            if (sender.TabItems.Count == 0)
+            {
+                Close();
+            }
+        }
+
+        private void TabView_TabDragCompleted(TabView sender, TabViewTabDragCompletedEventArgs args)
+        {
+            if (sender.TabItems.Count == 0)
+            {
+                Close();
             }
         }
     }

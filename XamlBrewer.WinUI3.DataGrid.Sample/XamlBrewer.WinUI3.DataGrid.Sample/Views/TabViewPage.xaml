@@ -1,13 +1,10 @@
 ﻿<Page x:Class="XamlBrewer.WinUI3.DataGrid.Sample.Views.TabViewPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:XamlBrewer.WinUI3.DataGrid.Sample.Views"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
-      xmlns:services="using:XamlBrewer.WinUI3.DataGrid.Sample.Services"
       xmlns:models="using:XamlBrewer.WinUI3.DataGrid.Sample.Models"
-      xmlns:ui="using:Windows.UI"
       mc:Ignorable="d"
       Background="Transparent">
     <TabView x:Name="tvMountains"
@@ -16,7 +13,10 @@
              BorderThickness="1"
              CornerRadius="4"
              CanDragTabs="True"
+             AllowDrop="True"
              TabDragStarting="TabView_TabDragStarting"
+             DragOver="TabView_DragOver"
+             Drop="TabView_Drop"
              TabDroppedOutside="TabView_TabDroppedOutside">
         <TabView.Resources>
             <ResourceDictionary>

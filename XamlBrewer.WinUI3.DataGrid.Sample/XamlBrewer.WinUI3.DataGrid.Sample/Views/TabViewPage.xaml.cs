@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Navigation;
 using Windows.ApplicationModel.DataTransfer;
@@ -25,6 +26,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             Unloaded += DatabasePage_Unloaded;
         }
 
+        #region Navigation
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _token = DataGrid.RegisterPropertyChangedCallback(ctWinUI.DataGrid.ItemsSourceProperty, DataGridItemsSourceChangedCallback);
@@ -36,7 +38,9 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             DataGrid.UnregisterPropertyChangedCallback(ctWinUI.DataGrid.ItemsSourceProperty, _token);
             base.OnNavigatedFrom(e);
         }
+        #endregion
 
+        #region DataGrid Functionality
         private async void DatabasePage_Loaded(object sender, RoutedEventArgs e)
         {
             await _viewModel.InitializeAsync();
@@ -188,7 +192,9 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             Grouped,
             Search
         }
+        #endregion
 
+        #region Details - Drag and Drop
         private void DetailsButton_Click(object sender, RoutedEventArgs e)
         {
             var item = DataGrid.SelectedItem as Mountain;
@@ -205,6 +211,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             };
 
             tvMountains.TabItems.Add(tabViewItem);
+            tvMountains.SelectedIndex = tvMountains.TabItems.Count - 1;
         }
 
         private void TabView_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
@@ -212,17 +219,34 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             var tab = args.Tab;
             tvMountains.TabItems.Remove(tab);
 
-            TabsWindow window = new();
-
+            TabsWindow window = new() { Title = (Application.Current as App).Title };
             window.AddTab(tab);
             window.Activate();
         }
 
         private void TabView_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
         {
-            var firstItem = args.Tab;
-            args.Data.Properties.Add(DataIdentifier, firstItem);
+            args.Data.Properties.Add(DataIdentifier, args.Tab);
             args.Data.RequestedOperation = DataPackageOperation.Move;
         }
+        private void TabView_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = DataPackageOperation.Move;
+        }
+
+        private void TabView_Drop(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Properties[DataIdentifier] is TabViewItem)
+            {
+                var tvi = e.DataView.Properties[DataIdentifier] as TabViewItem;
+                var tvlv = tvi?.Parent as TabViewListView;
+                if (tvlv is not null)
+                {
+                    tvlv.Items.Remove(tvi);
+                    tvMountains.TabItems.Add(tvi);
+                }
+            }
+        }
+        #endregion
     }
 }

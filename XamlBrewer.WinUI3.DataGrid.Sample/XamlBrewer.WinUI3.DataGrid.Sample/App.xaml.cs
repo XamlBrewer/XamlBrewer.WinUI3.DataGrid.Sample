@@ -14,6 +14,8 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample
 
         public INavigation Navigation => shell;
 
+        public string Title => shell.Title;
+
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             shell = new Shell();
