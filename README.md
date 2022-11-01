@@ -4,7 +4,7 @@ This WinUI 3 Desktop app tests the Community Toolkit DataGrid Control:
 * a Windows App SDK version of the original UWP Community Toolkit Sample App page
 * a more enterprise oriented version using SQLite, Entity Framework Core, and Microsoft MVVM
 * a pagination sample page
-* a page demonstrating displaying row details in a TabView with drag-and-drop to and from a secondary window (in progress)
+* a page demonstrating displaying row details in a TabView with drag-and-drop to and from a secondary window
 
 Features include
 * populating the DataGrid
