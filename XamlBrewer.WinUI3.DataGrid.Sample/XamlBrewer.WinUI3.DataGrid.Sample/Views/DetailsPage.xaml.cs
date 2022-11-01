@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using XamlBrewer.WinUI3.DataGrid.Sample.Models;
 
 namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 {
@@ -9,5 +10,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         {
             InitializeComponent();
         }
+
+        public Mountain ViewModel => DataContext as Mountain;
     }
 }

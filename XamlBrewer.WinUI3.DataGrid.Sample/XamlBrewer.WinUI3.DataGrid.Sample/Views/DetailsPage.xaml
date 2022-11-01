@@ -5,9 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      Background="Transparent">
 
-    <Grid>
-
+    <Grid Background="Transparent"
+          Padding="20">
+        <RelativePanel Background="Transparent">
+            <TextBox x:Name="Name"
+                     Header="Name"
+                     IsEnabled="False"
+                     Text="{x:Bind ViewModel.Name}" />
+        </RelativePanel>
     </Grid>
 </Page>

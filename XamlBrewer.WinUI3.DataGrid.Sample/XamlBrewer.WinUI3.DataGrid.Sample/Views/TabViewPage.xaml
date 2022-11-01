@@ -17,20 +17,29 @@
              TabDragStarting="TabView_TabDragStarting"
              DragOver="TabView_DragOver"
              Drop="TabView_Drop"
-             TabDroppedOutside="TabView_TabDroppedOutside">
+             TabDroppedOutside="TabView_TabDroppedOutside"
+             Background="Transparent">
         <TabView.Resources>
+            <!-- This applies to the whole TabViewItem, not just the Header -->
             <ResourceDictionary>
-                <StaticResource x:Key="TabViewItemHeaderBackgroundSelected"
-                                ResourceKey="SystemAccentColorBrush" />
+                <SolidColorBrush x:Key="TabViewItemHeaderBackgroundSelected"
+                                 Color="Transparent" />
             </ResourceDictionary>
         </TabView.Resources>
         <TabViewItem Header="All"
                      IsClosable="False"
-                     CanDrag="False">
+                     CanDrag="False"
+                     Background="Transparent">
+            <TabViewItem.Resources>
+                <ResourceDictionary>
+                    <StaticResource x:Key="TabViewItemHeaderBackgroundSelected"
+                                    ResourceKey="SystemAccentColorBrush" />
+                </ResourceDictionary>
+            </TabViewItem.Resources>
             <TabViewItem.IconSource>
                 <FontIconSource Glyph="&#xE8FD;" />
             </TabViewItem.IconSource>
-            <Grid>
+            <Grid Background="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
@@ -41,10 +50,6 @@
                               BorderBrush="{StaticResource SystemAccentColorBrush}"
                               BorderThickness=".5 0 .5 .5"
                               Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                            <!-- Strange that this does not work: -->
-                            <!--<Grid.Background>
-                        <SolidColorBrush Color="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
-                    </Grid.Background>-->
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />

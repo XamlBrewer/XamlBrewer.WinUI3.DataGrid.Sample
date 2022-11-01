@@ -18,9 +18,10 @@
                  TabItemsChanged="TabView_TabItemsChanged"
                  TabDragCompleted="TabView_TabDragCompleted">
             <TabView.Resources>
+                <!-- This applies to the whole TabViewItem, not just the Header -->
                 <ResourceDictionary>
-                    <StaticResource x:Key="TabViewItemHeaderBackgroundSelected"
-                                    ResourceKey="SystemAccentColorBrush" />
+                    <SolidColorBrush x:Key="TabViewItemHeaderBackgroundSelected"
+                                     Color="Transparent" />
                 </ResourceDictionary>
             </TabView.Resources>
         </TabView>
