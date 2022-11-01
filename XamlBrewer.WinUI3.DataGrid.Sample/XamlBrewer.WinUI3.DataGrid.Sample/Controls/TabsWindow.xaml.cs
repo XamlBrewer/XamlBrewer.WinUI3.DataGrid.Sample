@@ -16,6 +16,11 @@ namespace XamlBrewer.WinUI.Controls
             InitializeComponent();
         }
 
+        public TabsWindow(ElementTheme requestedTheme) : this()
+        {
+            Root.RequestedTheme = requestedTheme;
+        }
+
         public void AddTab(TabViewItem tab)
         {
             tabView.TabItems.Add(tab);
@@ -32,7 +37,7 @@ namespace XamlBrewer.WinUI.Controls
             var tab = args.Tab;
             tabView.TabItems.Remove(tab);
 
-            TabsWindow window = new() { Title = (Application.Current as App).Title };
+            TabsWindow window = new(Root.RequestedTheme) { Title = (Application.Current as App).Title };
             window.AddTab(tab);
             window.Activate();
         }

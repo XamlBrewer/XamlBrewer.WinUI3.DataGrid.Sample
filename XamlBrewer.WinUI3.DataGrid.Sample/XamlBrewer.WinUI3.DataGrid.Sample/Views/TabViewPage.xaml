@@ -6,11 +6,11 @@
       xmlns:ctWinUI="using:CommunityToolkit.WinUI.UI.Controls"
       xmlns:models="using:XamlBrewer.WinUI3.DataGrid.Sample.Models"
       mc:Ignorable="d"
-      Background="Transparent">
+      Background="Transparent"
+      Padding="0">
     <TabView x:Name="tvMountains"
-             Margin="0 0 0 80"
+             Margin="0"
              IsAddTabButtonVisible="False"
-             BorderThickness="1"
              CornerRadius="4"
              CanDragTabs="True"
              AllowDrop="True"
@@ -18,6 +18,8 @@
              DragOver="TabView_DragOver"
              Drop="TabView_Drop"
              TabDroppedOutside="TabView_TabDroppedOutside"
+             BorderBrush="{ThemeResource SystemAccentColorBrush}"
+             BorderThickness="0 1.5 0 0"
              Background="Transparent">
         <TabView.Resources>
             <!-- This applies to the whole TabViewItem, not just the Header -->
@@ -39,7 +41,8 @@
             <TabViewItem.IconSource>
                 <FontIconSource Glyph="&#xE8FD;" />
             </TabViewItem.IconSource>
-            <Grid Background="Transparent">
+            <Grid Background="Transparent"
+                  Padding="16">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />

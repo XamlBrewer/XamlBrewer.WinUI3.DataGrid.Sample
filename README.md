@@ -16,6 +16,7 @@ Features include
 * instant theme switching
 * pagination
 * displaying multiple row details in TabView
+* tab-tearoff of details in TabView
 * ...
 
 <a href="https://www.buymeacoffee.com/xamlbrewer" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
@@ -27,3 +28,6 @@ Features include
 ![Screenshot](Assets/DatabaseSearch.png?raw=true)
 
 ![Screenshot](Assets/Pagination.png?raw=true)
+
+
+![Screenshot](Assets/TabbedDetail.png?raw=true)

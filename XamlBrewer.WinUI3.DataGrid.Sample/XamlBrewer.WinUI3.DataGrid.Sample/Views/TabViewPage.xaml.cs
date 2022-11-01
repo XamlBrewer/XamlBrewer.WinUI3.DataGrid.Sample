@@ -224,7 +224,10 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             var tab = args.Tab;
             tvMountains.TabItems.Remove(tab);
 
-            TabsWindow window = new() { Title = (Application.Current as App).Title };
+            TabsWindow window = new(ActualTheme)
+            {
+                Title = (Application.Current as App).Title
+            };
             window.AddTab(tab);
             window.Activate();
         }

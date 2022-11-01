@@ -8,12 +8,66 @@
       Background="Transparent">
 
     <Grid Background="Transparent"
-          Padding="20">
+          Padding="16">
         <RelativePanel Background="Transparent">
             <TextBox x:Name="Name"
                      Header="Name"
-                     IsEnabled="False"
+                     IsReadOnly="True"
                      Text="{x:Bind ViewModel.Name}" />
+            <TextBox x:Name="ParentMountain"
+                     Header="Parent Mountain"
+                     IsReadOnly="True"
+                     Text="{x:Bind ViewModel.ParentMountain}"
+                     RelativePanel.RightOf="Name"
+                     Margin="16 0" />
+            <TextBox x:Name="Range"
+                     Header="Range"
+                     IsReadOnly="True"
+                     Text="{x:Bind ViewModel.Range}"
+                     RelativePanel.RightOf="ParentMountain" />
+            <TextBox x:Name="Height"
+                     Header="Height (m)"
+                     IsReadOnly="True"
+                     Text="{x:Bind ViewModel.Height}"
+                     RelativePanel.Below="Name"
+                     Margin="0 16" />
+            <TextBox x:Name="Rank"
+                     Header="Rank"
+                     IsReadOnly="True"
+                     Text="{x:Bind ViewModel.Rank}"
+                     RelativePanel.RightOf="Height"
+                     RelativePanel.Below="ParentMountain"
+                     RelativePanel.AlignLeftWith="ParentMountain"
+                     Margin="16" />
+            <Grid x:Name="Map"
+                  RelativePanel.Below="Height"
+                  MaxHeight="200">
+                <Border CornerRadius="4">
+                    <Image Source="/Assets/Himalayas.jpg"
+                           Opacity=".5" />
+                </Border>
+
+                <TextBox Header="Coordinates"
+                         Text="{x:Bind ViewModel.Coordinates}"
+                         VerticalAlignment="Top"
+                         HorizontalAlignment="Left"
+                         IsReadOnly="True"
+                         Margin="16" />
+            </Grid>
+            <TextBox x:Name="FirstAscent"
+                     Header="First Ascent"
+                     IsReadOnly="True"
+                     Text="{x:Bind ViewModel.FirstAscent}"
+                     RelativePanel.Below="Map"
+                     Margin="0 16" />
+            <TextBox x:Name="Ascents"
+                     Header="Ascents"
+                     IsReadOnly="True"
+                     Text="{x:Bind ViewModel.Ascents}"
+                     RelativePanel.Below="Map"
+                     RelativePanel.RightOf="FirstAscent"
+                     RelativePanel.AlignLeftWith="Rank"
+                     Margin="16" />
         </RelativePanel>
     </Grid>
 </Page>
