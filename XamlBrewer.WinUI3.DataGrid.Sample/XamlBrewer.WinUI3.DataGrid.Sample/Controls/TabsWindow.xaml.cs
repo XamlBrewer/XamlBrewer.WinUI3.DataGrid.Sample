@@ -37,7 +37,7 @@ namespace XamlBrewer.WinUI.Controls
             var tab = args.Tab;
             tabView.TabItems.Remove(tab);
 
-            TabsWindow window = new(Root.RequestedTheme) { Title = (Application.Current as App).Title };
+            TabsWindow window = new(Root.ActualTheme) { Title = (Application.Current as App).Title };
             window.AddTab(tab);
             window.Activate();
         }
