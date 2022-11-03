@@ -49,7 +49,10 @@ namespace XamlBrewer.WinUI.Controls
 
         private void TabView_DragOver(object sender, DragEventArgs e)
         {
-            e.AcceptedOperation = DataPackageOperation.Move;
+            if (e.DataView.Properties[DataIdentifier] is TabViewItem)
+            {
+                e.AcceptedOperation = DataPackageOperation.Move;
+            }
         }
 
         private void TabView_Drop(object sender, DragEventArgs e)
