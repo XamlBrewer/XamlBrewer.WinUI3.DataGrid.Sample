@@ -9,7 +9,7 @@ namespace XamlBrewer.WinUI.Controls
 {
     public sealed partial class TabsWindow : Window
     {
-        private const string DataIdentifier = "MountainTabItem";
+        private const string DataIdentifier = "TabItem";
 
         public TabsWindow()
         {

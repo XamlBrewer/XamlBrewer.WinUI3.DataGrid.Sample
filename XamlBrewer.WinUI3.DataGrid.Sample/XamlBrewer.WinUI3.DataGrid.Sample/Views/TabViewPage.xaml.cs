@@ -3,7 +3,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Navigation;
-using System.Collections.Generic;
 using Windows.ApplicationModel.DataTransfer;
 using XamlBrewer.WinUI.Controls;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
@@ -18,7 +17,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
         private DataGridDisplayMode _displayMode = DataGridDisplayMode.Default;
         private long _token;
         private string _grouping;
-        private const string DataIdentifier = "MountainTabItem";
+        private const string DataIdentifier = "TabItem";
 
         public TabViewPage()
         {
