@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Navigation;
+using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
 using XamlBrewer.WinUI.Controls;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
@@ -215,7 +216,12 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             tabViewItem.Resources.Add("TabViewItemHeaderBackgroundSelected", Application.Current.Resources["SystemAccentColorBrush"]);
 
             tvMountains.TabItems.Add(tabViewItem);
-            tvMountains.SelectedIndex = tvMountains.TabItems.Count - 1;
+            tvMountains.SelectedItem = tabViewItem;
+        }
+
+        private void Tab_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            tvMountains.TabItems.Remove(args.Tab);
         }
 
         private void TabView_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
@@ -236,6 +242,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             args.Data.Properties.Add(DataIdentifier, args.Tab);
             args.Data.RequestedOperation = DataPackageOperation.Move;
         }
+
         private void TabView_DragOver(object sender, DragEventArgs e)
         {
             if (e.DataView.Properties[DataIdentifier] is TabViewItem)

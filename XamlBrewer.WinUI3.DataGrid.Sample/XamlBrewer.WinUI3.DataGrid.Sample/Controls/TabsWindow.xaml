@@ -18,6 +18,7 @@
                  AllowDrop="True"
                  AllowDropTabs="True"
                  CanDragTabs="True"
+                 TabCloseRequested="Tab_TabCloseRequested"
                  TabDragStarting="TabView_TabDragStarting"
                  DragOver="TabView_DragOver"
                  Drop="TabView_Drop"

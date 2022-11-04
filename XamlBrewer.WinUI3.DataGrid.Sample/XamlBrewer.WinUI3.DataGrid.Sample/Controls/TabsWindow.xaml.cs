@@ -26,6 +26,11 @@ namespace XamlBrewer.WinUI.Controls
             tabView.TabItems.Add(tab);
         }
 
+        private void Tab_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            tabView.TabItems.Remove(args.Tab);
+        }
+
         private void TabView_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
         {
             args.Data.Properties.Add(DataIdentifier, args.Tab);
