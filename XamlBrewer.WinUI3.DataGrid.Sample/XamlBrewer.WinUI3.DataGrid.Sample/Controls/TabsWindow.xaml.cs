@@ -1,8 +1,13 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation.Collections;
+using WinRT.Interop;
+using XamlBrewer.WinUI3;
 using XamlBrewer.WinUI3.DataGrid.Sample;
 
 namespace XamlBrewer.WinUI.Controls
@@ -14,6 +19,9 @@ namespace XamlBrewer.WinUI.Controls
         public TabsWindow()
         {
             InitializeComponent();
+
+            var appWindow = this.GetAppWindow();
+            appWindow.SetIcon("Assets/Beer.ico");
         }
 
         public TabsWindow(ElementTheme requestedTheme) : this()

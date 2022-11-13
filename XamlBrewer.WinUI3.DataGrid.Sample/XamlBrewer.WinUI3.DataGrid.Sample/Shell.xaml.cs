@@ -1,4 +1,8 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
+using System;
+using WinRT.Interop;
 using XamlBrewer.WinUI3.Services;
 
 namespace XamlBrewer.WinUI3.DataGrid.Sample
@@ -10,6 +14,9 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample
             Title = "XAML Brewer WinUI 3 DataGrid Sample";
 
             InitializeComponent();
+
+            var appWindow = this.GetAppWindow();
+            appWindow.SetIcon("Assets/Beer.ico");
 
             Root.RequestedTheme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
         }
