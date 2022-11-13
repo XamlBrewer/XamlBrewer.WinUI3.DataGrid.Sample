@@ -7,14 +7,14 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample
     {
         private Shell shell;
 
+        public static string Title => "XAML Brewer WinUI 3 DataGrid Sample";
+
         public App()
         {
             InitializeComponent();
         }
 
         public INavigation Navigation => shell;
-
-        public string Title => shell.Title;
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {

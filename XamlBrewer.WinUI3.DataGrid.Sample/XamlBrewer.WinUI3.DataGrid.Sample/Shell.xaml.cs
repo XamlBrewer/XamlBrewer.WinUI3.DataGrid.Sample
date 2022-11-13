@@ -11,7 +11,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample
     {
         public Shell()
         {
-            Title = "XAML Brewer WinUI 3 DataGrid Sample";
+            Title = App.Title;
 
             InitializeComponent();
 

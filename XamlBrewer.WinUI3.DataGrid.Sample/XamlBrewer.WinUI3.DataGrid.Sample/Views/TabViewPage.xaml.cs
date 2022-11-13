@@ -231,7 +231,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
             TabsWindow window = new(ActualTheme)
             {
-                Title = (Application.Current as App).Title
+                Title = App.Title
             };
             window.AddTab(tab);
             window.Activate();
