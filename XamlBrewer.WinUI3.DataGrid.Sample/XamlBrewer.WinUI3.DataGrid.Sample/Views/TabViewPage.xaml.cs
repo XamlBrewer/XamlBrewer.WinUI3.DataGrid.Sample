@@ -213,6 +213,7 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
             };
 
             // <StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey = "SystemAccentColorBrush" />
+            tabViewItem.Resources.Add("TabViewItemHeaderBackground", Application.Current.Resources["SystemAccentColorBrush"]);
             tabViewItem.Resources.Add("TabViewItemHeaderBackgroundSelected", Application.Current.Resources["SystemAccentColorBrush"]);
 
             tvMountains.TabItems.Add(tabViewItem);

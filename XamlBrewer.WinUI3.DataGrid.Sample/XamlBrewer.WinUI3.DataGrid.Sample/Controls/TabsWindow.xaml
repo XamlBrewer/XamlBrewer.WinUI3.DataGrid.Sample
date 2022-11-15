@@ -6,6 +6,7 @@
         mc:Ignorable="d">
     <Grid x:Name="Root"
           Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
         <!-- Background -->
         <Image Stretch="UniformToFill"
                Opacity=".25"
@@ -17,6 +18,7 @@
         <TabView x:Name="tabView"
                  AllowDrop="True"
                  AllowDropTabs="True"
+                 IsAddTabButtonVisible="False"
                  CanDragTabs="True"
                  TabCloseRequested="Tab_TabCloseRequested"
                  TabDragStarting="TabView_TabDragStarting"
@@ -27,14 +29,20 @@
                  TabItemsChanged="TabView_TabItemsChanged"
                  TabDragCompleted="TabView_TabDragCompleted"
                  BorderBrush="{ThemeResource SystemAccentColorBrush}"
-                 BorderThickness="0 1.5 0 0">
+                 BorderThickness="0 1.5 0 0"
+                 Background="Transparent">
             <TabView.Resources>
-                <!-- This applies to the whole TabViewItem, not just the Header -->
+                <!--This applies to the whole TabViewItem, not just the Header-->
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="TabViewItemHeaderBackgroundSelected"
                                      Color="Transparent" />
                 </ResourceDictionary>
             </TabView.Resources>
+            <TabView.TabStripFooter>
+                <Grid x:Name="CustomDragRegion"
+                      MinWidth="188"
+                      Background="Transparent" />
+            </TabView.TabStripFooter>
         </TabView>
 
         <!-- XAML Brewer Logo -->

@@ -20,8 +20,8 @@ namespace XamlBrewer.WinUI.Controls
         {
             InitializeComponent();
 
-            var appWindow = this.GetAppWindow();
-            appWindow.SetIcon("Assets/Beer.ico");
+            SetTitleBar(CustomDragRegion); 
+            ExtendsContentIntoTitleBar = true;
         }
 
         public TabsWindow(ElementTheme requestedTheme) : this()
