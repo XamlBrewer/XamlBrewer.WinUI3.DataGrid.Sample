@@ -38,6 +38,13 @@
                                      Color="Transparent" />
                 </ResourceDictionary>
             </TabView.Resources>
+            <TabView.TabStripHeader>
+                <Image Stretch="UniformToFill"
+                       Source="/Assets/Beer.png"
+                       Height="20"
+                       VerticalAlignment="Center"
+                       Margin="8 0" />
+            </TabView.TabStripHeader>
             <TabView.TabStripFooter>
                 <Grid x:Name="CustomDragRegion"
                       MinWidth="188"
