@@ -31,7 +31,8 @@
         </TabView.Resources>
         <TabViewItem Header="All"
                      IsClosable="False"
-                     CanDrag="False">
+                     CanDrag="False"
+                     Tag="CanNotDrag">
             <TabViewItem.Resources>
                 <ResourceDictionary>
                     <StaticResource x:Key="TabViewItemHeaderBackground"

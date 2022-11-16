@@ -227,6 +227,11 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         private void TabView_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
         {
+            if (args.Tab.Tag?.ToString() == "CanNotDrag")
+            {
+                return;
+            }
+
             var tab = args.Tab;
             tvMountains.TabItems.Remove(tab);
 
@@ -240,6 +245,11 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
 
         private void TabView_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
         {
+            if (args.Tab.Tag?.ToString() == "CanNotDrag")
+            {
+                return;
+            }
+
             args.Data.Properties.Add(DataIdentifier, args.Tab);
             args.Data.RequestedOperation = DataPackageOperation.Move;
         }
