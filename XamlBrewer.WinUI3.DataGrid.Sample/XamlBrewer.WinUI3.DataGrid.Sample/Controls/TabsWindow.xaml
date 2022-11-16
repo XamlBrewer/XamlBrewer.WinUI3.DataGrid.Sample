@@ -30,8 +30,7 @@
                  TabDragCompleted="TabView_TabDragCompleted"
                  BorderBrush="{ThemeResource SystemAccentColorBrush}"
                  BorderThickness="0 1.5 0 0"
-                 Background="Transparent"
-                 Margin="0 -4 0 0">
+                 Background="Transparent">
             <TabView.Resources>
                 <!--This applies to the whole TabViewItem, not just the Header-->
                 <ResourceDictionary>
@@ -42,9 +41,7 @@
             <TabView.TabStripFooter>
                 <Grid x:Name="CustomDragRegion"
                       MinWidth="188"
-                      Background="Transparent"
-                      Height="36"
-                      VerticalAlignment="Top" />
+                      Background="Transparent" />
             </TabView.TabStripFooter>
         </TabView>
 

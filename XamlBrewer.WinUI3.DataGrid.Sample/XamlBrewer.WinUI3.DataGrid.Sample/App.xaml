@@ -25,6 +25,12 @@
             <SolidColorBrush x:Key="SystemAccentColorBrush"
                              Color="{StaticResource SystemAccentColor}"
                              Opacity=".33" />
+            <SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionForeground"
+                             Color="{StaticResource SystemAccentColor}" />
+            <SolidColorBrush x:Key="WindowCaptionForegroundDisabled"
+                             Color="{StaticResource SystemAccentColor}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
