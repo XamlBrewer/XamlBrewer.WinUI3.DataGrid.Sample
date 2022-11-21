@@ -1,4 +1,7 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using XamlBrewer.WinUI3.Services;
 
 namespace XamlBrewer.WinUI3.DataGrid.Sample
@@ -18,6 +21,12 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            Ioc.Default.ConfigureServices
+                (new ServiceCollection()
+                    .AddSingleton<IMessenger>(WeakReferenceMessenger.Default)
+                    .BuildServiceProvider()
+                );
+
             shell = new Shell();
             shell.Activate();
         }

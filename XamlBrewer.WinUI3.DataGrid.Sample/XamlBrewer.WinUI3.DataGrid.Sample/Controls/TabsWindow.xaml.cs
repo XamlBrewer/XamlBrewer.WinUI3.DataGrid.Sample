@@ -1,4 +1,6 @@
-﻿using Microsoft.UI;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -9,6 +11,7 @@ using Windows.Foundation.Collections;
 using WinRT.Interop;
 using XamlBrewer.WinUI3;
 using XamlBrewer.WinUI3.DataGrid.Sample;
+using XamlBrewer.WinUI3.Services;
 
 namespace XamlBrewer.WinUI.Controls
 {
@@ -22,6 +25,12 @@ namespace XamlBrewer.WinUI.Controls
 
             SetTitleBar(CustomDragRegion); 
             ExtendsContentIntoTitleBar = true;
+
+            var messenger = Ioc.Default.GetService<IMessenger>();
+            messenger.Register<ThemeChangedMessage>(this, (r, m) =>
+            {
+                Root.RequestedTheme = m.Value;
+            });
         }
 
         public TabsWindow(ElementTheme requestedTheme) : this()

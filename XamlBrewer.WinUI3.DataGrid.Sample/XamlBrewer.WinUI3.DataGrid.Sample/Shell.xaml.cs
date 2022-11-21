@@ -1,8 +1,6 @@
-﻿using Microsoft.UI;
-using Microsoft.UI.Windowing;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
-using System;
-using WinRT.Interop;
 using XamlBrewer.WinUI3.Services;
 
 namespace XamlBrewer.WinUI3.DataGrid.Sample
@@ -24,6 +22,8 @@ namespace XamlBrewer.WinUI3.DataGrid.Sample
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
             Root.RequestedTheme = Root.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
+
+            Ioc.Default.GetService<IMessenger>().Send(new ThemeChangedMessage(Root.ActualTheme));
         }
     }
 }
