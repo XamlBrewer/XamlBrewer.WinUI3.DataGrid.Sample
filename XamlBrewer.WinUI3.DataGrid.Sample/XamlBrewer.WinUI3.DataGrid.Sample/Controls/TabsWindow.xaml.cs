@@ -1,15 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using System;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation.Collections;
-using WinRT.Interop;
-using XamlBrewer.WinUI3;
 using XamlBrewer.WinUI3.DataGrid.Sample;
 using XamlBrewer.WinUI3.Services;
 
