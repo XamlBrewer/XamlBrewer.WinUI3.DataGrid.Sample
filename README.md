@@ -1,4 +1,4 @@
-# XamlBrewer.WinUI3.DataGrid.Sample
+# XamlBrewer WinUI3 DataGrid Sample
 
 This WinUI 3 Desktop app tests the Community Toolkit DataGrid Control:
 * a Windows App SDK version of the original UWP Community Toolkit Sample App page

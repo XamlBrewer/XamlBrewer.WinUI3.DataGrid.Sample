@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 using XamlBrewer.WinUI3.DataGrid.Sample.Models;
 
 namespace XamlBrewer.WinUI3.DataGrid.Sample.Views
